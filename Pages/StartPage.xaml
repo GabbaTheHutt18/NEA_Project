@@ -21,6 +21,6 @@
          Height = "30" Margin = "20,180,122,109"/>
 
         <Button Content = "Sign Up" Height = "20" Width = "50" Margin = "245,164,122,109" 
-               />
+              Command= "{Binding SignUpButtonClickedCommand}"/>
     </Grid>
 </UserControl>

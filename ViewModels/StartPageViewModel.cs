@@ -20,7 +20,7 @@ namespace NEA_Project.ViewModels
         {
             _parent = parent;
             LoginButtonClickedCommand = new SimpleCommand(_ => LoginButtonClicked());
-            SignUpButtonClickedCommand = new SimpleCommand(_ => SignUpButtonClicked())
+            SignUpButtonClickedCommand = new SimpleCommand(_ => SignUpButtonClicked());
             DebugText = _parent.CurrentPage.ToString();
         }
 
@@ -37,12 +37,13 @@ namespace NEA_Project.ViewModels
         {
 
             _parent.ChangeToLoginPage();
-            DebugText = _parent.CurrentPage.ToString() ;
+           
         }
 
         private void SignUpButtonClicked()
-        { 
-        
+        {
+            _parent.ChangeToSignUpPage();
+            
         }
     }
 }

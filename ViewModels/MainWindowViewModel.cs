@@ -26,11 +26,9 @@ namespace NEA_Project.ViewModels
                 RaiseAndSetIfChanged(ref _currentPage, value);
             }
         }
-        public ICommand StartButtonClickedCommand { get; }
         public MainWindowViewModel()
 
         {
-            StartButtonClickedCommand = new SimpleCommand(_ => StartButtonClicked());
             LoginPageViewModel = new LoginPageViewModel();
             StartPageViewModel = new StartPageViewModel(this);
             SignUpPageViewModel = new SignUpPageViewModel();
@@ -43,9 +41,9 @@ namespace NEA_Project.ViewModels
             CurrentPage = ViewStates.LoginPage;
         }
 
-        private void StartButtonClicked()
-        { 
-            
+        public void ChangeToSignUpPage()
+        {
+            CurrentPage = ViewStates.SignUpPage;
         }
 
 
