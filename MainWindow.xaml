@@ -4,14 +4,65 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NEA_Project"
+        xmlns:page="clr-namespace:NEA_Project.Pages"
+        xmlns:viewmodel="clr-namespace:NEA_Project.ViewModels"
+        xmlns:constant="clr-namespace:NEA_Project.Constants"
+        d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="604">
     <Grid>
-        <Frame x:Name="Main"/>
-        <Button Content = "Log in" Height = "30" Width = "80" Click="LoginBtnClicked"/>
-        <TextBlock Text = "Don't have an account?" 
-         Height = "30" Margin = "210,180,122,109"/>
-        <Button Content = "Sign Up" Height = "20" Width = "50" Margin = "245,164,122,109" 
-                Click="SignUpClicked"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+
+        <UserControl Grid.Column="0" Grid.Row="0">
+            <UserControl.Style>
+                <Style TargetType="UserControl">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CurrentPage}" Value="{x:Static constant:ViewStates.StartPage}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UserControl.Style>
+
+            <page:StartPage DataContext="{Binding StartPageViewModel}"/>
+        </UserControl>
+
+        <UserControl Grid.Column="0" Grid.Row="0">
+            <UserControl.Style>
+                <Style TargetType="UserControl">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CurrentPage}" Value="{x:Static constant:ViewStates.LoginPage}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UserControl.Style>
+            
+            <page:LoginPage DataContext="{Binding LoginPageViewModel}"/>
+        </UserControl>
+
+        <UserControl Grid.Column="0" Grid.Row="0">
+            <UserControl.Style>
+                <Style TargetType="UserControl">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CurrentPage}" Value="{x:Static constant:ViewStates.SignUpPage}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UserControl.Style>
+
+            <page:SignUpPage DataContext="{Binding SignUpPageViewModel}"/>
+        </UserControl>
+
     </Grid>
 </Window>

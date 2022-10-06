@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NEA_Project
+namespace NEA_Project.Pages
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Interaction logic for SignUpPage.xaml
     /// </summary>
-    public partial class Login : Page
+    public partial class SignUpPage : UserControl
     {
-        public Login()
+        public SignUpPage()
         {
             InitializeComponent();
         }

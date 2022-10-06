@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="NEA_Project.Pages.StartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NEA_Project" 
+      xmlns:viewmodels="clr-namespace:NEA_Project.ViewModels" 
+      d:DataContext="{d:DesignInstance Type=viewmodels:StartPageViewModel}"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      >
+
+    <Grid Background="White">
+        <Button Content = "Log in" Height = "30" Width = "80"
+                Command="{Binding LoginButtonClickedCommand}"/>
+        
+        <TextBlock Text = "Don't have an account?" 
+         Height = "30" Margin = "210,180,122,109"/>
+
+        <TextBlock Text = "{Binding DebugText}" 
+         Height = "30" Margin = "20,180,122,109"/>
+
+        <Button Content = "Sign Up" Height = "20" Width = "50" Margin = "245,164,122,109" 
+               />
+    </Grid>
+</UserControl>

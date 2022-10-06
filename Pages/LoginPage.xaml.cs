@@ -1,5 +1,4 @@
-﻿using NEA_Project.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,19 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NEA_Project
+namespace NEA_Project.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for LoginPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoginPage : UserControl
     {
-        public MainWindow()
+        public LoginPage()
         {
             InitializeComponent();
-            var vm = new MainWindowViewModel();
-            this.DataContext = vm;
         }
-        
     }
 }

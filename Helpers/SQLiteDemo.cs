@@ -5,28 +5,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SQLiteDemo
+namespace SQLDatabase
 {
-    class Program
+    class Database
     {
+        private SQLiteConnection Connection { get; set; }
 
-        static void SQL(string[] args)
+        public Database(string tablename, string tableRequirements)
         {
-            SQLiteConnection sqlite_conn;
-            sqlite_conn = CreateConnection();
-            CreateTable(sqlite_conn);
-            InsertData(sqlite_conn);
-            ReadData(sqlite_conn);
+            Connection = CreateConnection();
+            CreateTable(tablename, tableRequirements);
+
         }
 
-        static SQLiteConnection CreateConnection()
+        private SQLiteConnection CreateConnection()
         {
 
             SQLiteConnection sqlite_conn;
             // Create a new database connection:
-            sqlite_conn = new SQLiteConnection("Data Source= database.db; Version = 3; New = True; Compress = True; ");
-           // Open the connection:
-         try
+            sqlite_conn = new SQLiteConnection("Data Source=database.db; Version = 3; New = True; Compress = True; ");
+            // Open the connection:
+            try
             {
                 sqlite_conn.Open();
             }
@@ -37,43 +36,40 @@ namespace SQLiteDemo
             return sqlite_conn;
         }
 
-        static void CreateTable(SQLiteConnection conn)
+        public void Execute(string query)
         {
-
             SQLiteCommand sqlite_cmd;
-            string Createsql = "CREATE TABLE SampleTable(Col1 VARCHAR(20), Col2 INT)";
-           string Createsql1 = "CREATE TABLE SampleTable1(Col1 VARCHAR(20), Col2 INT)";
-           sqlite_cmd = conn.CreateCommand();
-            sqlite_cmd.CommandText = Createsql;
+            sqlite_cmd = Connection.CreateCommand();
+            sqlite_cmd.CommandText = query;
             sqlite_cmd.ExecuteNonQuery();
-            sqlite_cmd.CommandText = Createsql1;
-            sqlite_cmd.ExecuteNonQuery();
+
 
         }
 
-        static void InsertData(SQLiteConnection conn)
+        public void CreateTable(string tablename, string tableRequirements)
         {
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = conn.CreateCommand();
-            sqlite_cmd.CommandText = "INSERT INTO SampleTable(Col1, Col2) VALUES('Test Text ', 1); ";
-           sqlite_cmd.ExecuteNonQuery();
-            sqlite_cmd.CommandText = "INSERT INTO SampleTable(Col1, Col2) VALUES('Test1 Text1 ', 2); ";
-           sqlite_cmd.ExecuteNonQuery();
-            sqlite_cmd.CommandText = "INSERT INTO SampleTable(Col1, Col2) VALUES('Test2 Text2 ', 3); ";
-           sqlite_cmd.ExecuteNonQuery();
-
-
-            sqlite_cmd.CommandText = "INSERT INTO SampleTable1(Col1, Col2) VALUES('Test3 Text3 ', 3); ";
-           sqlite_cmd.ExecuteNonQuery();
-
+            string Createsql = $"CREATE TABLE IF NOT EXISTS {tablename}({tableRequirements});";
+            Execute(Createsql);
         }
 
-        static void ReadData(SQLiteConnection conn)
+        public void InsertData(string tablename, string collumns, string values)
+        {
+            string Insertsql = $"INSERT INTO {tablename}({collumns}) VALUES({values}); ";
+            Execute(Insertsql);
+        }
+
+        public void UpdateData(string tablename, string set)
+        {
+            string Updatesql = $"UPDATE {tablename} SET {set};";
+            Execute(Updatesql);
+        }
+
+        public void ReadData(string tablename, string condition)
         {
             SQLiteDataReader sqlite_datareader;
             SQLiteCommand sqlite_cmd;
-            sqlite_cmd = conn.CreateCommand();
-            sqlite_cmd.CommandText = "SELECT * FROM SampleTable";
+            sqlite_cmd = Connection.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT {condition} FROM " + tablename;
 
             sqlite_datareader = sqlite_cmd.ExecuteReader();
             while (sqlite_datareader.Read())
@@ -81,7 +77,19 @@ namespace SQLiteDemo
                 string myreader = sqlite_datareader.GetString(0);
                 Console.WriteLine(myreader);
             }
-            conn.Close();
+            //Connection.Close();
+        }
+
+        public void DeleteData(string tablename, string condition)
+        {
+            string Deletesql = $"DELETE FROM {tablename} WHERE {condition};";
+            Execute(Deletesql);
+        }
+
+        public void Droptable(string tablename)
+        {
+            string Dropsql = $"DROP TABLE {tablename};";
+            Execute(Dropsql);
         }
     }
 }
