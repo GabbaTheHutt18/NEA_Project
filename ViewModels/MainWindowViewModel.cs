@@ -29,7 +29,7 @@ namespace NEA_Project.ViewModels
         public MainWindowViewModel()
 
         {
-            LoginPageViewModel = new LoginPageViewModel();
+            LoginPageViewModel = new LoginPageViewModel(this);
             StartPageViewModel = new StartPageViewModel(this);
             SignUpPageViewModel = new SignUpPageViewModel();
 
