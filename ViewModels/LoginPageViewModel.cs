@@ -1,4 +1,5 @@
 ﻿using NEA_Project.Helpers;
+using SQLDatabase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,9 @@ namespace NEA_Project.ViewModels
         private string _userNameInput = "Enter Your Username Here...";
         private string _passwordInput = "Enter Your Password Here...";
         private MainWindowViewModel _parent;
+        
         public ICommand LoginButtonClickedCommand { get; }
-
+        private Database Database { get; set { Database.CreateTable("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(20)");} }
         public LoginPageViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
@@ -31,8 +33,6 @@ namespace NEA_Project.ViewModels
                 RaiseAndSetIfChanged(ref _userNameInput, value);
             }
         }
-
-        
 
         public string PasswordInput
         {
