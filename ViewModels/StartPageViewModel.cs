@@ -45,5 +45,7 @@ namespace NEA_Project.ViewModels
             _parent.ChangeToSignUpPage();
             
         }
+
+        
     }
 }

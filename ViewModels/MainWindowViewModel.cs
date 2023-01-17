@@ -1,5 +1,6 @@
 ﻿using NEA_Project.Constants;
 using NEA_Project.Helpers;
+using SQLDatabase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace NEA_Project.ViewModels
     public class MainWindowViewModel : ObservableObject
     {
         private ViewStates _currentPage = ViewStates.StartPage;
-
+        private Database LoginDataBase = new Database("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(20)");
         public LoginPageViewModel LoginPageViewModel { get; set; }
         public StartPageViewModel StartPageViewModel { get; set; }
         public SignUpPageViewModel SignUpPageViewModel { get; set; }
@@ -32,6 +33,7 @@ namespace NEA_Project.ViewModels
             LoginPageViewModel = new LoginPageViewModel(this);
             StartPageViewModel = new StartPageViewModel(this);
             SignUpPageViewModel = new SignUpPageViewModel();
+       
 
 
         }
@@ -46,6 +48,11 @@ namespace NEA_Project.ViewModels
             CurrentPage = ViewStates.SignUpPage;
         }
 
+        private void CheckDatabaseExists()
+        {
+            LoginDataBase.CreateTable("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(20)");
+
+        }
 
     }
 

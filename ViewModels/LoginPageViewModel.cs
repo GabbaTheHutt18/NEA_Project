@@ -18,7 +18,6 @@ namespace NEA_Project.ViewModels
         private MainWindowViewModel _parent;
         
         public ICommand LoginButtonClickedCommand { get; }
-        private Database Database { get; set { Database.CreateTable("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(20)");} }
         public LoginPageViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
@@ -49,6 +48,8 @@ namespace NEA_Project.ViewModels
 
 
         }
+
+        
 
 
     }
