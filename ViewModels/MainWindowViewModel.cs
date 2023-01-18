@@ -17,6 +17,7 @@ namespace NEA_Project.ViewModels
         public LoginPageViewModel LoginPageViewModel { get; set; }
         public StartPageViewModel StartPageViewModel { get; set; }
         public SignUpPageViewModel SignUpPageViewModel { get; set; }
+        public HomePageViewModel HomePageViewModel { get; set; }    
         
 
         public ViewStates CurrentPage 
@@ -32,7 +33,8 @@ namespace NEA_Project.ViewModels
         {
             LoginPageViewModel = new LoginPageViewModel(this);
             StartPageViewModel = new StartPageViewModel(this);
-            SignUpPageViewModel = new SignUpPageViewModel();
+            SignUpPageViewModel = new SignUpPageViewModel(this);
+            HomePageViewModel = new HomePageViewModel(this);
        
 
 
@@ -48,12 +50,12 @@ namespace NEA_Project.ViewModels
             CurrentPage = ViewStates.SignUpPage;
         }
 
-        private void CheckDatabaseExists()
+        public void ChangeToHomePage()
         {
-            LoginDataBase.CreateTable("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(20)");
-
+            CurrentPage = ViewStates.HomePage;
         }
 
+        
     }
 
     

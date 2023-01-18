@@ -11,5 +11,6 @@ namespace NEA_Project.Constants
         StartPage = 0,
         LoginPage = 1,
         SignUpPage = 2,
+        HomePage = 3,
     }
 }

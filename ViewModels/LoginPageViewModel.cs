@@ -44,7 +44,7 @@ namespace NEA_Project.ViewModels
 
         private void LoginButtonClicked()
         {
-            _parent.ChangeToLoginPage();
+            _parent.ChangeToHomePage();
 
 
         }
