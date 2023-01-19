@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SQLDatabase
 {
-    class Database
+    public class Database
     {
         private SQLiteConnection Connection { get; set; }
 

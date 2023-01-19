@@ -10,13 +10,13 @@ using System.Windows.Input;
 
 namespace NEA_Project.ViewModels
 {
-   
+
     public class LoginPageViewModel : ObservableObject
     {
         private string _userNameInput = "Enter Your Username Here...";
         private string _passwordInput = "Enter Your Password Here...";
         private MainWindowViewModel _parent;
-        
+
         public ICommand LoginButtonClickedCommand { get; }
         public LoginPageViewModel(MainWindowViewModel parent)
         {
@@ -47,6 +47,13 @@ namespace NEA_Project.ViewModels
             _parent.ChangeToHomePage();
 
 
+        }
+
+        private bool CheckDataBase()
+        {
+            _parent.LoginDataBase.ReadData();
+
+            return true;
         }
 
         

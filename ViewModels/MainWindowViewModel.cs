@@ -13,7 +13,7 @@ namespace NEA_Project.ViewModels
     public class MainWindowViewModel : ObservableObject
     {
         private ViewStates _currentPage = ViewStates.StartPage;
-        private Database LoginDataBase = new Database("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(20)");
+        public Database LoginDataBase = new Database("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(20)");
         public LoginPageViewModel LoginPageViewModel { get; set; }
         public StartPageViewModel StartPageViewModel { get; set; }
         public SignUpPageViewModel SignUpPageViewModel { get; set; }
