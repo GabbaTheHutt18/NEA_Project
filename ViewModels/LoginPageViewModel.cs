@@ -51,7 +51,7 @@ namespace NEA_Project.ViewModels
 
         private bool CheckDataBase()
         {
-            _parent.LoginDataBase.ReadData();
+            //_parent.LoginDataBase.ReadData();
 
             return true;
         }

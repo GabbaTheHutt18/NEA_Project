@@ -61,7 +61,22 @@
                 </Style>
             </UserControl.Style>
 
-            <page:SignUpPage DataContext="{Binding SignUpPageViewModel}"/>
+            <page:SignUpPage DataContext="{Binding HomePageViewModel}"/>
+        </UserControl>
+
+        <UserControl Grid.Column="0" Grid.Row="0">
+            <UserControl.Style>
+                <Style TargetType="UserControl">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CurrentPage}" Value="{x:Static constant:ViewStates.HomePage}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UserControl.Style>
+
+            <page:HomePage DataContext="{Binding HomePageViewModel}"/>
         </UserControl>
 
     </Grid>
