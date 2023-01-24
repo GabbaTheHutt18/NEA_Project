@@ -44,16 +44,22 @@ namespace NEA_Project.ViewModels
 
         private void LoginButtonClicked()
         {
-            _parent.ChangeToHomePage();
-
-
+            if (CheckDataBase())
+            {
+                _parent.ChangeToHomePage();
+            }
+                
         }
 
         private bool CheckDataBase()
         {
-            _parent.LoginDataBase.ReadData();
-
-            return true;
+           
+            string correctPassWord =_parent.LoginDataBase.ReadData("LoginDetails", "Passwords", $"Usernames = '{_userNameInput}'");
+            if (correctPassWord == _passwordInput)
+            {
+                return true;
+            }
+            return false;
         }
 
         
