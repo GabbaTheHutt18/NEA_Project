@@ -52,9 +52,10 @@ namespace SQLDatabase
             Execute(Createsql);
         }
 
-        public void InsertData(string tablename, string collumns, string values)
+        public void InsertData(string tablename, string columns, string values)
         {
-            string Insertsql = $"INSERT INTO {tablename}({collumns}) VALUES({values}); ";
+            string Insertsql = $"INSERT INTO {tablename}({columns}) VALUES({values}); ";
+            
             Execute(Insertsql);
         }
 
@@ -64,20 +65,22 @@ namespace SQLDatabase
             Execute(Updatesql);
         }
 
-        public void ReadData(string tablename, string condition)
+        public string ReadData(string tablename,string Column, string condition)
         {
             SQLiteDataReader sqlite_datareader;
             SQLiteCommand sqlite_cmd;
+            string myreader = "";
             sqlite_cmd = Connection.CreateCommand();
-            sqlite_cmd.CommandText = $"SELECT {condition} FROM " + tablename;
+            sqlite_cmd.CommandText = $"SELECT {Column} FROM {tablename} WHERE {condition}";
 
             sqlite_datareader = sqlite_cmd.ExecuteReader();
             while (sqlite_datareader.Read())
             {
-                string myreader = sqlite_datareader.GetString(0);
-                Console.WriteLine(myreader);
+                myreader = sqlite_datareader.GetString(0);
+               // Console.WriteLine(myreader);
             }
             //Connection.Close();
+            return myreader;
         }
 
         public void DeleteData(string tablename, string condition)

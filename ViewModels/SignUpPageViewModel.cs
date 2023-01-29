@@ -43,10 +43,8 @@ namespace NEA_Project.ViewModels
 
         private void VerifyButtonClicked()
         {
-            Random random = new Random();
-            int verificationdigit = random.Next(100,200);
-            
 
+            _parent.LoginDataBase.InsertData("LoginDetails","UserNames, Passwords", $"'{_userNameInput}', '{_passwordInput}'");
 
 
 
