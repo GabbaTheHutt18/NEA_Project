@@ -45,6 +45,7 @@ namespace NEA_Project.ViewModels
         {
 
             _parent.LoginDataBase.InsertData("LoginDetails","UserNames, Passwords", $"'{_userNameInput}', '{_passwordInput}'");
+            _parent.ChangeToHomePage();
 
 
 
