@@ -4,6 +4,7 @@ using SQLDatabase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -13,7 +14,7 @@ namespace NEA_Project.ViewModels
     public class MainWindowViewModel : ObservableObject
     {
         private ViewStates _currentPage = ViewStates.StartPage;
-        public Database LoginDataBase = new Database("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(20)");
+        public Database LoginDataBase = new Database("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(500)");
         public LoginPageViewModel LoginPageViewModel { get; set; }
         public StartPageViewModel StartPageViewModel { get; set; }
         public SignUpPageViewModel SignUpPageViewModel { get; set; }
@@ -55,7 +56,26 @@ namespace NEA_Project.ViewModels
             CurrentPage = ViewStates.HomePage;
         }
 
-        
+        public byte[] Hashing(string userInput)
+        {
+            byte[] ascii = new byte[userInput.Length];
+            for (int i = 0; i < userInput.Length; i++)
+            {
+
+                ascii[i] = (byte)userInput[i];
+
+            }
+
+            HashAlgorithm sha = SHA256.Create();
+            byte[] result = sha.ComputeHash(ascii);
+            for (int j = 0; j < result.Length; j++)
+            {
+                Console.WriteLine(result[j]);
+            }
+            return result;
+        }
+
+
     }
 
     

@@ -53,13 +53,17 @@ namespace NEA_Project.ViewModels
 
         private bool CheckDataBase()
         {
-           
-            string correctPassWord =_parent.LoginDataBase.ReadData("LoginDetails", "Passwords", $"Usernames = '{_userNameInput}'");
-            if (correctPassWord == _passwordInput)
+            byte[] hashedPassword = _parent.Hashing(_passwordInput);
+            string stringHashedPassword = String.Join(" ", hashedPassword);
+            string correctPassword =_parent.LoginDataBase.ReadData("LoginDetails", "Passwords", $"Usernames = '{_userNameInput}'");
+            
+            
+            if (!(stringHashedPassword == correctPassword))
             {
-                return true;
+                return false;
             }
-            return false;
+
+            return true; //It worked :)
         }
 
         

@@ -43,12 +43,10 @@ namespace NEA_Project.ViewModels
 
         private void VerifyButtonClicked()
         {
-
-            _parent.LoginDataBase.InsertData("LoginDetails","UserNames, Passwords", $"'{_userNameInput}', '{_passwordInput}'");
+            byte[] hashedPassword = _parent.Hashing(_passwordInput);
+            string stringHashedPassword = String.Join(" ", hashedPassword);
+            _parent.LoginDataBase.InsertData("LoginDetails","UserNames, Passwords", $"'{_userNameInput}', '{stringHashedPassword}'");
             _parent.ChangeToHomePage();
-
-
-
         }
 
 
