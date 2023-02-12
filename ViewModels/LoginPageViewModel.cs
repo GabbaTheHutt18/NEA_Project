@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace NEA_Project.ViewModels
@@ -44,26 +46,43 @@ namespace NEA_Project.ViewModels
 
         private void LoginButtonClicked()
         {
+            
             if (CheckDataBase())
             {
                 _parent.ChangeToHomePage();
             }
-                
+            else
+            {
+
+                MessageBoxResult result = MessageBox.Show("Hi friend, seems like you're not on our system, would you like to sign up?", "My App", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+                if (result == MessageBoxResult.Yes)
+                {
+                    _parent.ChangeToSignUpPage();
+                }
+                else
+                {
+                    MessageBox.Show("Oh well, remember that passwords and usernames are case sensitive!", "My App");
+
+                }
+
+            }
+
+
         }
 
         private bool CheckDataBase()
         {
             byte[] hashedPassword = _parent.Hashing(_passwordInput);
             string stringHashedPassword = String.Join(" ", hashedPassword);
-            string correctPassword =_parent.LoginDataBase.ReadData("LoginDetails", "Passwords", $"Usernames = '{_userNameInput}'");
+            string correctPassword =_parent.LoginDataBase.ReadData("LoginDetails", "Passwords", $"UserNames = '{_userNameInput}'");
             
             
-            if (!(stringHashedPassword == correctPassword))
+            if ((stringHashedPassword == correctPassword))
             {
-                return false;
+                return true;
             }
 
-            return true; //It worked :)
+            return false; //It worked :)
         }
 
         
