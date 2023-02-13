@@ -12,5 +12,6 @@ namespace NEA_Project.Constants
         LoginPage = 1,
         SignUpPage = 2,
         HomePage = 3,
+        ContinentsMap = 4,
     }
 }

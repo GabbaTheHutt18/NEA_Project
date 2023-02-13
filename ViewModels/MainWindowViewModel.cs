@@ -20,6 +20,7 @@ namespace NEA_Project.ViewModels
         public SignUpPageViewModel SignUpPageViewModel { get; set; }
         public HomePageViewModel HomePageViewModel { get; set; }    
         
+        public ContinentsMapViewModel ContinentsMapViewModel { get; set; }
 
         public ViewStates CurrentPage 
         {
@@ -36,6 +37,7 @@ namespace NEA_Project.ViewModels
             StartPageViewModel = new StartPageViewModel(this);
             SignUpPageViewModel = new SignUpPageViewModel(this);
             HomePageViewModel = new HomePageViewModel(this);
+            ContinentsMapViewModel = new ContinentsMapViewModel(this);
        
 
 
@@ -54,6 +56,13 @@ namespace NEA_Project.ViewModels
         public void ChangeToHomePage()
         {
             CurrentPage = ViewStates.HomePage;
+        }
+
+        public void ChangeToContinentsMap()
+        {
+            CurrentPage = ViewStates.ContinentsMap;
+        
+
         }
 
         public byte[] Hashing(string userInput)

@@ -9,7 +9,7 @@
         xmlns:constant="clr-namespace:NEA_Project.Constants"
         d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="604">
+        Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -77,6 +77,21 @@
             </UserControl.Style>
 
             <page:HomePage DataContext="{Binding HomePageViewModel}"/>
+        </UserControl>
+
+        <UserControl Grid.Column="0" Grid.Row="0">
+            <UserControl.Style>
+                <Style TargetType="UserControl">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CurrentPage}" Value="{x:Static constant:ViewStates.ContinentsMap}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UserControl.Style>
+
+            <page:ContinentsMap DataContext="{Binding ContinentsMapViewModel}"/>
         </UserControl>
 
 
