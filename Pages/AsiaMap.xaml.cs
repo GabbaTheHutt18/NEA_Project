@@ -16,15 +16,13 @@ using System.Windows.Shapes;
 namespace NEA_Project.Pages
 {
     /// <summary>
-    /// Interaction logic for ContinentsMap.xaml
+    /// Interaction logic for AsiaMap.xaml
     /// </summary>
-    public partial class ContinentsMap : UserControl
+    public partial class AsiaMap : UserControl
     {
-        public ContinentsMap()
+        public AsiaMap()
         {
             InitializeComponent();
         }
-
-        
     }
 }

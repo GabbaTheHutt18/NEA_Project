@@ -94,6 +94,97 @@
             <page:ContinentsMap DataContext="{Binding ContinentsMapViewModel}"/>
         </UserControl>
 
+        <UserControl Grid.Column="0" Grid.Row="0">
+            <UserControl.Style>
+                <Style TargetType="UserControl">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CurrentPage}" Value="{x:Static constant:ViewStates.AfricaMap}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UserControl.Style>
+
+            <page:AfricaMap DataContext="{Binding AfricaMapViewModel}"/>
+        </UserControl>
+
+        <UserControl Grid.Column="0" Grid.Row="0">
+            <UserControl.Style>
+                <Style TargetType="UserControl">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CurrentPage}" Value="{x:Static constant:ViewStates.AsiaMap}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UserControl.Style>
+
+            <page:AsiaMap DataContext="{Binding AsiaMapViewModel}"/>
+
+        </UserControl>
+
+        <UserControl Grid.Column="0" Grid.Row="0">
+            <UserControl.Style>
+                <Style TargetType="UserControl">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CurrentPage}" Value="{x:Static constant:ViewStates.EuropeMap}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UserControl.Style>
+            
+            <page:EuropeMap DataContext="{Binding EuropeMapViewModel}"/>
+        </UserControl>
+
+        <UserControl Grid.Column="0" Grid.Row="0">
+            <UserControl.Style>
+                <Style TargetType="UserControl">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CurrentPage}" Value="{x:Static constant:ViewStates.NAmericaMap}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UserControl.Style>
+
+            <page:NAmericaMap DataContext="{Binding NAmericaMapViewModel}"/>
+        </UserControl>
+
+        <UserControl Grid.Column="0" Grid.Row="0">
+            <UserControl.Style>
+                <Style TargetType="UserControl">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CurrentPage}" Value="{x:Static constant:ViewStates.SAmericaMap}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UserControl.Style>
+
+            <page:SAmericaMap DataContext="{Binding SAmericaMapViewModel}"/>
+        </UserControl>
+
+        <UserControl Grid.Column="0" Grid.Row="0">
+            <UserControl.Style>
+                <Style TargetType="UserControl">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CurrentPage}" Value="{x:Static constant:ViewStates.OceaniaMap}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UserControl.Style>
+
+            <page:OceaniaMap DataContext="{Binding OceaniaMapViewModel}"/>
+        </UserControl>
+
 
     </Grid>
 </Window>

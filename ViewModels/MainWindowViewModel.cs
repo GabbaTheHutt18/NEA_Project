@@ -19,8 +19,14 @@ namespace NEA_Project.ViewModels
         public StartPageViewModel StartPageViewModel { get; set; }
         public SignUpPageViewModel SignUpPageViewModel { get; set; }
         public HomePageViewModel HomePageViewModel { get; set; }    
-        
         public ContinentsMapViewModel ContinentsMapViewModel { get; set; }
+        public AfricaMapViewModel AfricaMapViewModel { get; set; }
+        public AsiaMapViewModel AsiaMapViewModel { get; set; }
+
+        public EuropeMapViewModel EuropeMapViewModel { get; set; }
+        public NAmericaMapViewModel NAmericaMapViewModel { get; set; }
+        public SAmericaMapViewModel SAmericaMapViewModel { get; set; }
+        public OceaniaMapViewModel OceaniaMapViewModel { get; set; }
 
         public ViewStates CurrentPage 
         {
@@ -38,6 +44,12 @@ namespace NEA_Project.ViewModels
             SignUpPageViewModel = new SignUpPageViewModel(this);
             HomePageViewModel = new HomePageViewModel(this);
             ContinentsMapViewModel = new ContinentsMapViewModel(this);
+            AfricaMapViewModel = new AfricaMapViewModel(this);
+            AsiaMapViewModel = new AsiaMapViewModel(this);
+            EuropeMapViewModel = new EuropeMapViewModel(this);
+            NAmericaMapViewModel = new NAmericaMapViewModel(this);
+            SAmericaMapViewModel = new SAmericaMapViewModel(this);
+            OceaniaMapViewModel = new OceaniaMapViewModel(this); 
        
 
 
@@ -64,6 +76,35 @@ namespace NEA_Project.ViewModels
         
 
         }
+
+        public void ChangeToAfricaMap()
+        {
+            CurrentPage = ViewStates.AfricaMap;
+        }
+
+        public void ChangeToAsiaMap()
+        {
+            CurrentPage = ViewStates.AsiaMap;
+        }
+
+        public void ChangeToEuropeMap()
+        {
+            CurrentPage = ViewStates.EuropeMap;
+        }
+        public void ChangeToNAmericaMap()
+        {
+            CurrentPage = ViewStates.NAmericaMap;
+        }
+        public void ChangeToSAmericaMap()
+        {
+            CurrentPage = ViewStates.SAmericaMap;
+        }
+        public void ChangeToOceaniaMap()
+        {
+            CurrentPage = ViewStates.OceaniaMap;
+        }
+
+
 
         public byte[] Hashing(string userInput)
         {
