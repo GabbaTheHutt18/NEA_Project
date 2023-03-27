@@ -94,5 +94,22 @@ namespace SQLDatabase
             string Dropsql = $"DROP TABLE {tablename};";
             Execute(Dropsql);
         }
+
+        public int GetSize(string tablename, string ID)
+        {
+            SQLiteDataReader sqlite_datareader;
+            SQLiteCommand sqlite_cmd;
+            string myreader = "";
+            int Count = 0;
+            sqlite_cmd = Connection.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT COUNT({ID}) FROM {tablename}";
+            Count = Convert.ToInt32(sqlite_cmd.ExecuteScalar());
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+
+            //Connection.Close();
+
+
+            return Count;
+        }
     }
 }

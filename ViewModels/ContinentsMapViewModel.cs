@@ -18,6 +18,7 @@ namespace NEA_Project.ViewModels
         public ICommand NAmericaButtonClickedCommand { get; }
         public ICommand SAmericaButtonClickedCommand { get; }
         public ICommand OceaniaButtonClickedCommand { get; }
+        public ICommand HomePageButtonCommandClicked { get; }
         public ContinentsMapViewModel (MainWindowViewModel parent)
         {
             _parent = parent;
@@ -27,6 +28,7 @@ namespace NEA_Project.ViewModels
             NAmericaButtonClickedCommand = new SimpleCommand(_ => NAmericaButtonClicked());
             SAmericaButtonClickedCommand = new SimpleCommand(_ => SAmericaButtonClicked());
             OceaniaButtonClickedCommand = new SimpleCommand(_ => OceaniaButtonClicked());
+            HomePageButtonCommandClicked = new SimpleCommand(_ => HomePageButtonClicked());
 
 
         }
@@ -54,6 +56,10 @@ namespace NEA_Project.ViewModels
         private void OceaniaButtonClicked()
         {
             _parent.ChangeToOceaniaMap();
+        }
+        private void HomePageButtonClicked()
+        {
+            _parent.ChangeToHomePage();
         }
     }
 }

@@ -12,7 +12,7 @@
         <StackPanel>
             <TextBlock Text="HI THIS IS SIGN UP :D"/>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
-                <TextBlock Text="{Binding UserNameInput}"/>
+                <TextBlock Text="USERNAME:"/>
                 <TextBox VerticalAlignment ="Center" Width="200" Text="{Binding UserNameInput , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
@@ -21,6 +21,8 @@
             </StackPanel>
             <Button Content = "Verify" Height = "30" Width = "80"
                 Command="{Binding VerifyButtonClickedCommand}"/>
+            <TextBlock Text = "{Binding DebugText}" 
+              Height = "30" Margin = "20,180,122,109"/>
 
 
 

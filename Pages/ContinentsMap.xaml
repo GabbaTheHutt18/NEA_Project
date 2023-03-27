@@ -7,13 +7,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Image Source="C:\Users\gabye\Documents\NEA\Images\Map_Continents.png" Width="650" Height="400" Margin="1,0,1,1"/>
-        <Button Margin="162,92,512,217" Opacity="0.05" Command="{Binding NAmericaButtonClickedCommand}"/>
-        <Button Margin="231,245,471,104" Opacity="0.05" Command="{Binding SAmericaButtonClickedCommand}"/>
-        <Button Margin="371,121,334,254" Opacity="0.05" Command="{Binding EuropeButtonClickedCommand}"/>
-        <Button Margin="368,217,348,127" Opacity="0.05" Command="{Binding AfricaButtonClickedCommand}" />
-        <Button Margin="485,121,166,210" Opacity="0.05" Command="{Binding AsiaButtonClickedCommand}"/>
-        <Button Margin="567,288,105,88" Opacity="0.05" Command="{Binding OceaniaButtonClickedCommand}"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="C:\Users\gabye\Documents\NEA\Images\Map_Continents.png"/>
+        </Grid.Background>
+        
+         <Button Content="Back To Home" Margin="350,5,315,343" Command="{Binding HomePageButtonCommandClicked}" Width="85" Height="40" />
+        
+        
+        <Button Margin="50,50,520,217" Opacity="0.05" Command="{Binding NAmericaButtonClickedCommand}"/>
+        <Button Margin="210,260,500,15" Opacity="0.05" Command="{Binding SAmericaButtonClickedCommand}"/>
+        <Button Margin="362,100,330,250" Opacity="0.05" Command="{Binding EuropeButtonClickedCommand}"/>
+        <Button Margin="368,220,340,100" Opacity="0.05" Command="{Binding AfricaButtonClickedCommand}" />
+        <Button Margin="485,100,100,150" Opacity="0.05" Command="{Binding AsiaButtonClickedCommand}"/>
+        <Button Margin="600,315,50,45" Opacity="0.05" Command="{Binding OceaniaButtonClickedCommand}"/>
+        
+
 
     </Grid>
 </UserControl>

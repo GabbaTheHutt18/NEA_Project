@@ -2,7 +2,9 @@
 using NEA_Project.Helpers;
 using SQLDatabase;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -14,6 +16,7 @@ namespace NEA_Project.ViewModels
     public class MainWindowViewModel : ObservableObject
     {
         private ViewStates _currentPage = ViewStates.StartPage;
+        
         public Database LoginDataBase = new Database("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(500)");
         public LoginPageViewModel LoginPageViewModel { get; set; }
         public StartPageViewModel StartPageViewModel { get; set; }
@@ -57,11 +60,13 @@ namespace NEA_Project.ViewModels
 
         public void ChangeToLoginPage()
         {
+           
             CurrentPage = ViewStates.LoginPage;
         }
 
         public void ChangeToSignUpPage()
         {
+            
             CurrentPage = ViewStates.SignUpPage;
         }
 
@@ -123,6 +128,38 @@ namespace NEA_Project.ViewModels
                 Console.WriteLine(result[j]);
             }
             return result;
+        }
+
+        public Database PopulateCountriesDatabase(string Continent)
+        {
+            string TopFolder = @"../../../Content";
+            string filename = Continent + ".txt";
+            string fullPath = Path.Combine(TopFolder, filename);
+            //string fullPath = System.IO.Path.GetFullPath($"{filename}.txt");
+            string[] lines = File.ReadAllLines(fullPath);
+            List<string[]> test = new List<string[]>();
+            Hashtable help = new Hashtable();
+            Dictionary<int, string[]> countriesTest = new Dictionary<int, string[]>();
+            Database countries = new Database($"{Continent}", "ID INT, CountryName VARCHAR(60),Population VARCHAR(100), LandArea VARCHAR(100), Density VARCHAR(100)");
+            int count = 0;
+            foreach (var item in lines)
+            {
+                test.Add(item.Split(","));
+            }
+            if (countries.GetSize(Continent, "ID") == 0)
+            {
+                foreach (var item in test)
+                {
+                    countries.InsertData($"{Continent}", "ID, CountryName,Population,LandArea,Density", $"{count},'{item[0]}','{item[1]}','{item[2]}','{item[3]}'");
+                    count += 1;
+                }
+            }
+            
+            
+            
+            
+
+            return countries;
         }
 
 

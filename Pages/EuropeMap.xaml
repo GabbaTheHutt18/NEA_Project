@@ -3,10 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NEA_Project.Pages"
+             xmlns:local="clr-namespace:NEA_Project.Pages" xmlns:viewmodels="clr-namespace:NEA_Project.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:EuropeMapViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Image Source="C:\Users\gabye\Documents\NEA\Images\EuropeanMap.png"/>
+        <StackPanel>
+            <Image Source="C:\Users\gabye\Documents\NEA\Images\EuropeanMap.png" Height="325" Width="692"/>
+            <StackPanel Orientation="Horizontal">
+                <ComboBox 
+                  IsEditable="true"
+                  Width ="200"
+                  Text="{Binding UserInput}"
+                  ItemsSource="{Binding Countries}"
+                  SelectedValue="{Binding Path=UserInput,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   />
+                <Button Content="Search Country" Command="{Binding SearchButtonCommand}"></Button>
+                <TextBlock Text="NAME" Margin="30,1,1,1"></TextBlock>
+                <TextBlock Text="{Binding CountryName}" Width="100"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="POPULATION "></TextBlock>
+                <TextBlock Text="{Binding CountryPopulation}" Width="100"></TextBlock>
+                <TextBlock Text="LAND AREA "></TextBlock>
+                <TextBlock Text="{Binding CountryLandArea}" Width="100"></TextBlock>
+                <TextBlock Text="POPULATION DENSITY "></TextBlock>
+                <TextBlock Text="{Binding CountryDensity}" Width="100"></TextBlock>
+
+            </StackPanel>
+            <Button Content="Back To Main Map" Command="{Binding MapButtonCommand}" Width="200"/>
+        </StackPanel>
     </Grid>
 </UserControl>
