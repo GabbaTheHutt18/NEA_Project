@@ -15,16 +15,23 @@ namespace NEA_Project.ViewModels
         private MainWindowViewModel _parent;
 
         public ICommand MapButtonClickedCommand { get; }
+        public ICommand QuestionBankMenuButtonClickedCommand { get; }
 
         public HomePageViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
             MapButtonClickedCommand = new SimpleCommand(_ => MapButtonClicked());
+            QuestionBankMenuButtonClickedCommand = new SimpleCommand(_ => QuestionBankButtonClicked());
         }
 
         private void MapButtonClicked()
         {
             _parent.ChangeToContinentsMap();
+        }
+
+        private void QuestionBankButtonClicked()
+        {
+            _parent.ChangeToQuestionBankMenuPage();
         }
 
     }

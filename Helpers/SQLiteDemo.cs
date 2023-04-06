@@ -11,10 +11,10 @@ namespace SQLDatabase
     {
         private SQLiteConnection Connection { get; set; }
 
-        public Database(string tablename, string tableRequirements)
+        public Database()
         {
             Connection = CreateConnection();
-            CreateTable(tablename, tableRequirements);
+            //CreateTable(tablename, tableRequirements);
 
         }
 
@@ -55,29 +55,44 @@ namespace SQLDatabase
         public void InsertData(string tablename, string columns, string values)
         {
             string Insertsql = $"INSERT INTO {tablename}({columns}) VALUES({values}); ";
-            
+
             Execute(Insertsql);
         }
 
-        public void UpdateData(string tablename, string set)
+        public void UpdateData(string tablename, string set, string condition)
         {
-            string Updatesql = $"UPDATE {tablename} SET {set};";
+            string Updatesql = $"UPDATE {tablename} SET {set} WHERE {condition};";
             Execute(Updatesql);
+
         }
 
-        public string ReadData(string tablename,string Column, string condition)
+        public List<string> ReadData(string tablename, string Column, string condition, int NoColums)
         {
             SQLiteDataReader sqlite_datareader;
             SQLiteCommand sqlite_cmd;
-            string myreader = "";
+            //string myreader = "";
+            List<string> myreader = new List<string>();
             sqlite_cmd = Connection.CreateCommand();
-            sqlite_cmd.CommandText = $"SELECT {Column} FROM {tablename} WHERE {condition}";
+            sqlite_cmd.CommandText = $"SELECT {Column} FROM {tablename} WHERE {condition};";
 
             sqlite_datareader = sqlite_cmd.ExecuteReader();
             while (sqlite_datareader.Read())
             {
-                myreader = sqlite_datareader.GetString(0);
-               // Console.WriteLine(myreader);
+                //myreader = sqlite_datareader.GetString(0);
+                for (int i = 0; i < NoColums; i++)
+                {
+                    try
+                    {
+                        myreader.Add(sqlite_datareader.GetString(i));
+                    }
+                    catch (Exception)
+                    {
+                        myreader.Add(sqlite_datareader.GetString(i));
+                    }
+                }
+                
+
+                // Console.WriteLine(myreader);
             }
             //Connection.Close();
             return myreader;
@@ -95,14 +110,14 @@ namespace SQLDatabase
             Execute(Dropsql);
         }
 
-        public int GetSize(string tablename, string ID)
+        public int GetSize(string tablename, string ID, string Condition)
         {
             SQLiteDataReader sqlite_datareader;
             SQLiteCommand sqlite_cmd;
             string myreader = "";
             int Count = 0;
             sqlite_cmd = Connection.CreateCommand();
-            sqlite_cmd.CommandText = $"SELECT COUNT({ID}) FROM {tablename}";
+            sqlite_cmd.CommandText = $"SELECT COUNT({ID}) FROM {tablename} {Condition};";
             Count = Convert.ToInt32(sqlite_cmd.ExecuteScalar());
             sqlite_datareader = sqlite_cmd.ExecuteReader();
 

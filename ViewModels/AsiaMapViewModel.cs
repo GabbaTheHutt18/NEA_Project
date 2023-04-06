@@ -24,9 +24,9 @@ namespace NEA_Project.ViewModels
         public AsiaMapViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
-            if (Asia == null)
+            if (_parent.Database.GetSize("Asia", "CountryID", "") == 0)
             {
-                Asia = _parent.PopulateCountriesDatabase("Asia");
+                _parent.PopulateCountriesDatabase("Asia");
             }
             PopulateList();
             SearchButtonCommand = new SimpleCommand(_ => SearchButtonClickedCommand());
@@ -42,10 +42,11 @@ namespace NEA_Project.ViewModels
 
         public void GetCountryInfo()
         {
-            CountryName = Asia.ReadData("Asia", "CountryName", $"CountryName LIKE '{UserInput}'");
-            CountryPopulation = Asia.ReadData("Asia", "Population", $"CountryName LIKE '{UserInput}'");
-            CountryLandArea = Asia.ReadData("Asia", "LandArea", $"CountryName LIKE '{UserInput}'");
-            CountryDensity = Asia.ReadData("Asia", "Density", $"CountryName LIKE '{UserInput}'");
+            List<string> CountryInfo = _parent.Database.ReadData("Asia", "CountryName, Population, LandArea, Density", $"CountryName LIKE '{UserInput}'", 4);
+            CountryName = CountryInfo[0];
+            CountryPopulation = CountryInfo[1];
+            CountryLandArea = CountryInfo[2];
+            CountryDensity = CountryInfo[3];
         }
 
 
@@ -56,9 +57,9 @@ namespace NEA_Project.ViewModels
         private void PopulateList()
         {
 
-            for (int i = 0; i < Asia.GetSize("Asia", "ID"); i++)
+            for (int i = 0; i < Asia.GetSize("Asia", "ID",""); i++)
             {
-                string country = Asia.ReadData("Asia", "CountryName", $"ID = {i}");
+                string country = Asia.ReadData("Asia", "CountryName", $"ID = {i}",1)[0];
                 _countries.Add(country);
             }
 

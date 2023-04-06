@@ -24,9 +24,9 @@ namespace NEA_Project.ViewModels
         public NAmericaMapViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
-            if (NAmerica == null)
+            if (_parent.Database.GetSize("NorthAmerica", "CountryID", "") == 0)
             {
-                NAmerica = _parent.PopulateCountriesDatabase("NorthAmerica");
+                _parent.PopulateCountriesDatabase("NorthAmerica");
             }
             PopulateList();
             SearchButtonCommand = new SimpleCommand(_ => SearchButtonClickedCommand());
@@ -41,10 +41,11 @@ namespace NEA_Project.ViewModels
 
         public void GetCountryInfo()
         {
-            CountryName = NAmerica.ReadData("NorthAmerica", "CountryName", $"CountryName LIKE '{UserInput}'");
-            CountryPopulation = NAmerica.ReadData("NorthAmerica", "Population", $"CountryName LIKE '{UserInput}'");
-            CountryLandArea = NAmerica.ReadData("NorthAmerica", "LandArea", $"CountryName LIKE '{UserInput}'");
-            CountryDensity = NAmerica.ReadData("NorthAmerica", "Density", $"CountryName LIKE '{UserInput}'");
+            List<string> CountryInfo = _parent.Database.ReadData("NorthAmerica", "CountryName, Population, LandArea, Density", $"CountryName LIKE '{UserInput}'", 4);
+            CountryName = CountryInfo[0];
+            CountryPopulation = CountryInfo[1];
+            CountryLandArea = CountryInfo[2];
+            CountryDensity = CountryInfo[3];
         }
 
 
@@ -56,9 +57,9 @@ namespace NEA_Project.ViewModels
         private void PopulateList()
         {
 
-            for (int i = 0; i < NAmerica.GetSize("NorthAmerica", "ID"); i++)
+            for (int i = 0; i < _parent.Database.GetSize("NorthAmerica", "ID",""); i++)
             {
-                string country = NAmerica.ReadData("NorthAmerica", "CountryName", $"ID = {i}");
+                string country = _parent.Database.ReadData("NorthAmerica", "CountryName", $"ID = {i}",1)[0];
                 _countries.Add(country);
             }
 

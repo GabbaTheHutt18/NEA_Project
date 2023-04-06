@@ -1,6 +1,4 @@
-﻿using NEA_Project.ViewModels;
-using NEA_Project.Constants;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,19 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NEA_Project
+namespace NEA_Project.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for QuestionBankDeletePage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class QuestionBankDeletePage : UserControl
     {
-        public MainWindow()
+        public QuestionBankDeletePage()
         {
             InitializeComponent();
-            var vm = new MainWindowViewModel();
-            this.DataContext = vm;
         }
-        
     }
 }

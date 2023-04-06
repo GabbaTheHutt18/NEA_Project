@@ -24,9 +24,9 @@ namespace NEA_Project.ViewModels
         public OceaniaMapViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
-            if (Oceania == null)
+            if (_parent.Database.GetSize("Oceania", "CountryID", "") == 0)
             {
-                Oceania = _parent.PopulateCountriesDatabase("Oceania");
+                _parent.PopulateCountriesDatabase("Oceania");
             }
             PopulateList();
             SearchButtonCommand = new SimpleCommand(_ => SearchButtonClickedCommand());
@@ -41,10 +41,11 @@ namespace NEA_Project.ViewModels
 
         public void GetCountryInfo()
         {
-            CountryName = Oceania.ReadData("Oceania", "CountryName", $"CountryName LIKE '{UserInput}'");
-            CountryPopulation = Oceania.ReadData("Oceania", "Population", $"CountryName LIKE '{UserInput}'");
-            CountryLandArea = Oceania.ReadData("Oceania", "LandArea", $"CountryName LIKE '{UserInput}'");
-            CountryDensity = Oceania.ReadData("Oceania", "Density", $"CountryName LIKE '{UserInput}'");
+            List<string> CountryInfo = _parent.Database.ReadData("Oceania", "CountryName, Population, LandArea, Density", $"CountryName LIKE '{UserInput}'", 4);
+            CountryName = CountryInfo[0];
+            CountryPopulation = CountryInfo[1];
+            CountryLandArea = CountryInfo[2];
+            CountryDensity = CountryInfo[3];
         }
 
 
@@ -56,9 +57,9 @@ namespace NEA_Project.ViewModels
         private void PopulateList()
         {
 
-            for (int i = 0; i < Oceania.GetSize("Oceania", "ID"); i++)
+            for (int i = 0; i < _parent.Database.GetSize("Oceania", "ID", ""); i++)
             {
-                string country = Oceania.ReadData("Oceania", "CountryName", $"ID = {i}");
+                string country = _parent.Database.ReadData("Oceania", "CountryName", $"ID = {i}", 1)[0];
                 _countries.Add(country);
             }
 

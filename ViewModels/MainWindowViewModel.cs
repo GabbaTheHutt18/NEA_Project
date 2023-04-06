@@ -1,5 +1,6 @@
 ﻿using NEA_Project.Constants;
 using NEA_Project.Helpers;
+using NEA_Project.Pages;
 using SQLDatabase;
 using System;
 using System.Collections;
@@ -17,19 +18,33 @@ namespace NEA_Project.ViewModels
     {
         private ViewStates _currentPage = ViewStates.StartPage;
         
-        public Database LoginDataBase = new Database("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(500)");
+        public Database Database = new Database();
         public LoginPageViewModel LoginPageViewModel { get; set; }
         public StartPageViewModel StartPageViewModel { get; set; }
         public SignUpPageViewModel SignUpPageViewModel { get; set; }
         public HomePageViewModel HomePageViewModel { get; set; }    
+
         public ContinentsMapViewModel ContinentsMapViewModel { get; set; }
         public AfricaMapViewModel AfricaMapViewModel { get; set; }
         public AsiaMapViewModel AsiaMapViewModel { get; set; }
-
         public EuropeMapViewModel EuropeMapViewModel { get; set; }
         public NAmericaMapViewModel NAmericaMapViewModel { get; set; }
         public SAmericaMapViewModel SAmericaMapViewModel { get; set; }
         public OceaniaMapViewModel OceaniaMapViewModel { get; set; }
+
+        public QuestionBankMenuPageViewModel QuestionBankMenuPageViewModel { get; set; }
+        public QuestionBankCreatePageViewModel QuestionBankCreatePageViewModel { get; set; }
+        public QuestionBankDeletePageViewModel QuestionBankDeletePageViewModel { get; set; }
+        public QuestionBankEditPageViewModel QuestionBankEditPageViewModel { get; set; }
+        public QuestionBankReadPageViewModel QuestionBankReadPageViewModel { get; set; }
+        
+        public GameMenuPageViewModel GameMenuPageViewModel { get; set; }
+        public PairsGamePageViewModel PairsGamePageViewModel { get; set; }
+        public QuizPageViewModel QuizPageViewModel { get; set; }
+        public WordScramblePageViewModel WordScramblePageViewModel { get; set; }
+        public UserStatsPageViewModel UserStatsPageViewModel { get; set; }
+
+        public int UserID { get; set; }
 
         public ViewStates CurrentPage 
         {
@@ -42,6 +57,7 @@ namespace NEA_Project.ViewModels
         public MainWindowViewModel()
 
         {
+            Database.CreateTable("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(500)");
             LoginPageViewModel = new LoginPageViewModel(this);
             StartPageViewModel = new StartPageViewModel(this);
             SignUpPageViewModel = new SignUpPageViewModel(this);
@@ -53,6 +69,16 @@ namespace NEA_Project.ViewModels
             NAmericaMapViewModel = new NAmericaMapViewModel(this);
             SAmericaMapViewModel = new SAmericaMapViewModel(this);
             OceaniaMapViewModel = new OceaniaMapViewModel(this); 
+            QuestionBankMenuPageViewModel = new QuestionBankMenuPageViewModel(this);
+            QuestionBankCreatePageViewModel = new QuestionBankCreatePageViewModel(this);
+            QuestionBankDeletePageViewModel = new QuestionBankDeletePageViewModel(this);
+            QuestionBankEditPageViewModel = new QuestionBankEditPageViewModel(this);
+            QuestionBankReadPageViewModel = new QuestionBankReadPageViewModel(this);
+            GameMenuPageViewModel = new GameMenuPageViewModel(this);
+            PairsGamePageViewModel = new PairsGamePageViewModel(this);
+            QuizPageViewModel = new QuizPageViewModel(this);
+            WordScramblePageViewModel = new WordScramblePageViewModel(this);
+            UserStatsPageViewModel = new UserStatsPageViewModel(this);
        
 
 
@@ -109,6 +135,49 @@ namespace NEA_Project.ViewModels
             CurrentPage = ViewStates.OceaniaMap;
         }
 
+        public void ChangeToQuestionBankMenuPage()
+        {
+            CurrentPage = ViewStates.QuestionBankMenu;
+        }
+        public void ChangeToQuestionBankCreatePage()
+        {
+            CurrentPage = ViewStates.QuestionBankCreate;
+        }
+        public void ChangeToQuestionBankDeletePage()
+        {
+            CurrentPage = ViewStates.QuestionBankDelete;
+        }
+        public void ChangeToQuestionBankEditPage()
+        {
+            CurrentPage = ViewStates.QuestionBankEdit;
+        }
+        public void ChangeToQuestionBankReadPage()
+        {
+            CurrentPage = ViewStates.QuestionBankRead;
+        }
+
+        public void ChangeToGameMenuPage()
+        {
+            CurrentPage = ViewStates.GameMenuPage;
+        }
+
+        public void ChangeToPairsGamePage()
+        {
+            CurrentPage = ViewStates.PairsGamePage;
+        }
+        public void ChangeToQuizPage()
+        {
+            CurrentPage = ViewStates.QuizPage;
+        }
+        public void ChangeToWordScramblePage()
+        {
+            CurrentPage = ViewStates.WordScramblePage;
+        }
+
+        public void ChangeToUserStatsPage()
+        {
+            CurrentPage = ViewStates.UserStatsPage;
+        }
 
 
         public byte[] Hashing(string userInput)
@@ -130,7 +199,7 @@ namespace NEA_Project.ViewModels
             return result;
         }
 
-        public Database PopulateCountriesDatabase(string Continent)
+        public void PopulateCountriesDatabase(string Continent)
         {
             string TopFolder = @"../../../Content";
             string filename = Continent + ".txt";
@@ -140,17 +209,17 @@ namespace NEA_Project.ViewModels
             List<string[]> test = new List<string[]>();
             Hashtable help = new Hashtable();
             Dictionary<int, string[]> countriesTest = new Dictionary<int, string[]>();
-            Database countries = new Database($"{Continent}", "ID INT, CountryName VARCHAR(60),Population VARCHAR(100), LandArea VARCHAR(100), Density VARCHAR(100)");
+            Database.CreateTable($"{Continent}", "ID INT, CountryName VARCHAR(60),Population VARCHAR(100), LandArea VARCHAR(100), Density VARCHAR(100)");
             int count = 0;
             foreach (var item in lines)
             {
                 test.Add(item.Split(","));
             }
-            if (countries.GetSize(Continent, "ID") == 0)
+            if (Database.GetSize(Continent, "ID", "") == 0)
             {
                 foreach (var item in test)
                 {
-                    countries.InsertData($"{Continent}", "ID, CountryName,Population,LandArea,Density", $"{count},'{item[0]}','{item[1]}','{item[2]}','{item[3]}'");
+                    Database.InsertData($"{Continent}", "ID, CountryName,Population,LandArea,Density", $"{count},'{item[0]}','{item[1]}','{item[2]}','{item[3]}'");
                     count += 1;
                 }
             }
@@ -159,7 +228,7 @@ namespace NEA_Project.ViewModels
             
             
 
-            return countries;
+            //return countries;
         }
 
 

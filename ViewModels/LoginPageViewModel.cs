@@ -74,7 +74,7 @@ namespace NEA_Project.ViewModels
         {
             byte[] hashedPassword = _parent.Hashing(_passwordInput);
             string stringHashedPassword = String.Join(" ", hashedPassword);
-            string correctPassword =_parent.LoginDataBase.ReadData("LoginDetails", "Passwords", $"UserNames = '{_userNameInput}'");
+            string correctPassword =_parent.Database.ReadData("LoginDetails", "Passwords", $"UserNames = '{_userNameInput}'",1)[0];
             
             
             if ((stringHashedPassword == correctPassword))

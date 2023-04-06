@@ -29,9 +29,9 @@ namespace NEA_Project.ViewModels
         public AfricaMapViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
-            if (Africa == null)
+            if (_parent.Database.GetSize("Africa","CountryID","") == 0)
             {
-                Africa = _parent.PopulateCountriesDatabase("Africa");
+                _parent.PopulateCountriesDatabase("Africa");
             }
             PopulateList();
             SearchButtonCommand = new SimpleCommand(_ => SearchButtonClickedCommand());
@@ -47,10 +47,11 @@ namespace NEA_Project.ViewModels
 
         public void GetCountryInfo()
         {
-            CountryName = Africa.ReadData("Africa", "CountryName", $"CountryName LIKE '{UserInput}'");
-            CountryPopulation = Africa.ReadData("Africa", "Population", $"CountryName LIKE '{UserInput}'");
-            CountryLandArea = Africa.ReadData("Africa", "LandArea", $"CountryName LIKE '{UserInput}'");
-            CountryDensity = Africa.ReadData("Africa", "Density", $"CountryName LIKE '{UserInput}'");
+            List<string> CountryInfo = _parent.Database.ReadData("Africa", "CountryName, Population, LandArea, Density", $"CountryName LIKE '{UserInput}'", 4);
+            CountryName = CountryInfo[0];
+            CountryPopulation = CountryInfo[1];
+            CountryLandArea = CountryInfo[2];
+            CountryDensity = CountryInfo[3];
         }
         
 
@@ -62,9 +63,9 @@ namespace NEA_Project.ViewModels
         private void PopulateList()
         {
 
-            for (int i = 0; i < Africa.GetSize("Africa", "ID"); i++)
+            for (int i = 0; i < _parent.Database.GetSize("Africa", "ID", ""); i++)
             {
-                string country = Africa.ReadData("Africa", "CountryName", $"ID = {i}");
+                string country = _parent.Database.ReadData("Africa", "CountryName", $"ID = {i}",1)[0];
                 _countries.Add(country);
             }
 
