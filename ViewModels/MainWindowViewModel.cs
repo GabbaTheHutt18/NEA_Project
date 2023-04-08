@@ -32,6 +32,16 @@ namespace NEA_Project.ViewModels
         public OceaniaMapViewModel OceaniaMapViewModel { get; set; }
 
         public QuestionBankMenuViewModel QuestionBankMenuViewModel { get; set; }
+        public QuestionBankEditViewModel QuestionBankEditViewModel { get; set; }
+        public QuestionBankCreateViewModel QuestionBankCreateViewModel { get; set; }
+        public QuestionBankDeleteViewModel QuestionBankDeleteViewModel { get; set; }
+        public QuestionBankReadViewModel QuestionBankReadViewModel { get; set; }
+        public UserStatsViewModel UserStatsViewModel { get; set; }
+
+        public GameMenuViewModel GameMenuViewModel { get; set; }
+        public QuizViewModel QuizViewModel { get; set; }
+        public WordScrambleViewModel WordScrambleViewModel { get; set; }
+        public PairsGameViewModel PairsGameViewModel { get; set; }
 
         public int UserID { get; set; }
 
@@ -59,9 +69,15 @@ namespace NEA_Project.ViewModels
             SAmericaMapViewModel = new SAmericaMapViewModel(this);
             OceaniaMapViewModel = new OceaniaMapViewModel(this); 
             QuestionBankMenuViewModel = new QuestionBankMenuViewModel(this);
-            
-       
-
+            QuestionBankEditViewModel = new QuestionBankEditViewModel(this);
+            QuestionBankCreateViewModel = new QuestionBankCreateViewModel(this);
+            QuestionBankDeleteViewModel = new QuestionBankDeleteViewModel(this);
+            QuestionBankReadViewModel = new QuestionBankReadViewModel(this);
+            UserStatsViewModel = new UserStatsViewModel(this);
+            GameMenuViewModel = new GameMenuViewModel(this);
+            QuizViewModel = new QuizViewModel(this);
+            WordScrambleViewModel = new WordScrambleViewModel(this);
+            PairsGameViewModel = new PairsGameViewModel(this);
 
         }
 
@@ -121,7 +137,44 @@ namespace NEA_Project.ViewModels
             CurrentPage = ViewStates.QuestionBankMenu;
         }
 
-       
+        public void ChangeToQuestionBankEditPage()
+        {
+            CurrentPage = ViewStates.QuestionBankEdit;
+        }
+        public void ChangeToQuestionBankCreatePage()
+        {
+            CurrentPage = ViewStates.QuestionBankCreate;
+        }
+        public void ChangeToQuestionBankDeletePage()
+        {
+            CurrentPage = ViewStates.QuestionBankDelete;
+        }
+        public void ChangeToQuestionBankReadPage()
+        {
+            CurrentPage = ViewStates.QuestionBankRead;
+        }
+        public void ChangeToUserStatsPage()
+        {
+            CurrentPage = ViewStates.UserStatsPage;
+        }
+        public void ChangeToGameMenuPage()
+        {
+            CurrentPage = ViewStates.GameMenuPage;
+        }
+        public void ChangeToQuizPage()
+        {
+            CurrentPage = ViewStates.QuizPage;
+        }
+        public void ChangeToWordScramblePage()
+        {
+            CurrentPage = ViewStates.WordScramblePage;
+        }
+        public void ChangeToPairsGamePage()
+        {
+            CurrentPage = ViewStates.PairsGamePage;
+        }
+
+
 
 
         public byte[] Hashing(string userInput)

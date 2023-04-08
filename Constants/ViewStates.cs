@@ -20,5 +20,14 @@ namespace NEA_Project.Constants
         SAmericaMap = 9,
         OceaniaMap = 10, 
         QuestionBankMenu = 11,
+        QuestionBankEdit = 12,
+        QuestionBankCreate = 13,
+        QuestionBankDelete = 14,
+        QuestionBankRead = 15,
+        UserStatsPage = 16,
+        GameMenuPage = 17,
+        QuizPage = 18,
+        WordScramblePage = 19,
+        PairsGamePage = 20,
     }
 }
