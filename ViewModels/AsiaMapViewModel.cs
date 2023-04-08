@@ -24,7 +24,7 @@ namespace NEA_Project.ViewModels
         public AsiaMapViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
-            if (_parent.Database.GetSize("Asia", "CountryID", "") == 0)
+            if (_parent.Database.GetSize("Asia", "ID", "") == 0)
             {
                 _parent.PopulateCountriesDatabase("Asia");
             }
@@ -57,9 +57,9 @@ namespace NEA_Project.ViewModels
         private void PopulateList()
         {
 
-            for (int i = 0; i < Asia.GetSize("Asia", "ID",""); i++)
+            for (int i = 0; i < _parent.Database.GetSize("Asia", "ID",""); i++)
             {
-                string country = Asia.ReadData("Asia", "CountryName", $"ID = {i}",1)[0];
+                string country = _parent.Database.ReadData("Asia", "CountryName", $"ID = {i}",1)[0];
                 _countries.Add(country);
             }
 

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace NEA_Project.Pages
 {
     /// <summary>
-    /// Interaction logic for GameMenuPage.xaml
+    /// Interaction logic for QuestionBankMenu.xaml
     /// </summary>
-    public partial class GameMenuPage : UserControl
+    public partial class QuestionBankMenu : UserControl
     {
-        public GameMenuPage()
+        public QuestionBankMenu()
         {
             InitializeComponent();
         }

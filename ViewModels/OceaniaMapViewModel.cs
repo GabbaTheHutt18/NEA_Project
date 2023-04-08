@@ -24,7 +24,7 @@ namespace NEA_Project.ViewModels
         public OceaniaMapViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
-            if (_parent.Database.GetSize("Oceania", "CountryID", "") == 0)
+            if (_parent.Database.GetSize("Oceania", "ID", "") == 0)
             {
                 _parent.PopulateCountriesDatabase("Oceania");
             }

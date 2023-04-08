@@ -4,16 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace NEA_Project.ViewModels
 {
-    public class WordScramblePageViewModel : ObservableObject
+    public class QuestionBankMenuViewModel
     {
         private MainWindowViewModel _parent;
-        //private List<string[]> QuestionBank = new List<string[]>();
-        public WordScramblePageViewModel(MainWindowViewModel parent)
+        
+
+        public QuestionBankMenuViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
+           
         }
+
     }
 }

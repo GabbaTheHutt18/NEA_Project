@@ -1,6 +1,5 @@
 ﻿using NEA_Project.Constants;
 using NEA_Project.Helpers;
-using NEA_Project.Pages;
 using SQLDatabase;
 using System;
 using System.Collections;
@@ -32,17 +31,7 @@ namespace NEA_Project.ViewModels
         public SAmericaMapViewModel SAmericaMapViewModel { get; set; }
         public OceaniaMapViewModel OceaniaMapViewModel { get; set; }
 
-        public QuestionBankMenuPageViewModel QuestionBankMenuPageViewModel { get; set; }
-        public QuestionBankCreatePageViewModel QuestionBankCreatePageViewModel { get; set; }
-        public QuestionBankDeletePageViewModel QuestionBankDeletePageViewModel { get; set; }
-        public QuestionBankEditPageViewModel QuestionBankEditPageViewModel { get; set; }
-        public QuestionBankReadPageViewModel QuestionBankReadPageViewModel { get; set; }
-        
-        public GameMenuPageViewModel GameMenuPageViewModel { get; set; }
-        public PairsGamePageViewModel PairsGamePageViewModel { get; set; }
-        public QuizPageViewModel QuizPageViewModel { get; set; }
-        public WordScramblePageViewModel WordScramblePageViewModel { get; set; }
-        public UserStatsPageViewModel UserStatsPageViewModel { get; set; }
+        public QuestionBankMenuViewModel QuestionBankMenuViewModel { get; set; }
 
         public int UserID { get; set; }
 
@@ -55,9 +44,9 @@ namespace NEA_Project.ViewModels
             }
         }
         public MainWindowViewModel()
-
         {
             Database.CreateTable("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(500)");
+            UserID = 1;
             LoginPageViewModel = new LoginPageViewModel(this);
             StartPageViewModel = new StartPageViewModel(this);
             SignUpPageViewModel = new SignUpPageViewModel(this);
@@ -69,16 +58,8 @@ namespace NEA_Project.ViewModels
             NAmericaMapViewModel = new NAmericaMapViewModel(this);
             SAmericaMapViewModel = new SAmericaMapViewModel(this);
             OceaniaMapViewModel = new OceaniaMapViewModel(this); 
-            QuestionBankMenuPageViewModel = new QuestionBankMenuPageViewModel(this);
-            QuestionBankCreatePageViewModel = new QuestionBankCreatePageViewModel(this);
-            QuestionBankDeletePageViewModel = new QuestionBankDeletePageViewModel(this);
-            QuestionBankEditPageViewModel = new QuestionBankEditPageViewModel(this);
-            QuestionBankReadPageViewModel = new QuestionBankReadPageViewModel(this);
-            GameMenuPageViewModel = new GameMenuPageViewModel(this);
-            PairsGamePageViewModel = new PairsGamePageViewModel(this);
-            QuizPageViewModel = new QuizPageViewModel(this);
-            WordScramblePageViewModel = new WordScramblePageViewModel(this);
-            UserStatsPageViewModel = new UserStatsPageViewModel(this);
+            QuestionBankMenuViewModel = new QuestionBankMenuViewModel(this);
+            
        
 
 
@@ -136,48 +117,11 @@ namespace NEA_Project.ViewModels
         }
 
         public void ChangeToQuestionBankMenuPage()
-        {
+        { 
             CurrentPage = ViewStates.QuestionBankMenu;
         }
-        public void ChangeToQuestionBankCreatePage()
-        {
-            CurrentPage = ViewStates.QuestionBankCreate;
-        }
-        public void ChangeToQuestionBankDeletePage()
-        {
-            CurrentPage = ViewStates.QuestionBankDelete;
-        }
-        public void ChangeToQuestionBankEditPage()
-        {
-            CurrentPage = ViewStates.QuestionBankEdit;
-        }
-        public void ChangeToQuestionBankReadPage()
-        {
-            CurrentPage = ViewStates.QuestionBankRead;
-        }
 
-        public void ChangeToGameMenuPage()
-        {
-            CurrentPage = ViewStates.GameMenuPage;
-        }
-
-        public void ChangeToPairsGamePage()
-        {
-            CurrentPage = ViewStates.PairsGamePage;
-        }
-        public void ChangeToQuizPage()
-        {
-            CurrentPage = ViewStates.QuizPage;
-        }
-        public void ChangeToWordScramblePage()
-        {
-            CurrentPage = ViewStates.WordScramblePage;
-        }
-
-        public void ChangeToUserStatsPage()
-        {
-            CurrentPage = ViewStates.UserStatsPage;
-        }
+       
 
 
         public byte[] Hashing(string userInput)

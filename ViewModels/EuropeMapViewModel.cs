@@ -24,7 +24,7 @@ namespace NEA_Project.ViewModels
         public EuropeMapViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
-            if (_parent.Database.GetSize("Europe", "CountryID", "") == 0)
+            if (_parent.Database.GetSize("Europe", "ID", "") == 0)
             {
                 _parent.PopulateCountriesDatabase("Europe");
             }
@@ -57,7 +57,7 @@ namespace NEA_Project.ViewModels
 
             for (int i = 0; i < _parent.Database.GetSize("Europe", "ID", ""); i++)
             {
-                string country = Europe.ReadData("Europe", "CountryName", $"ID = {i}", 1)[0];
+                string country = _parent.Database.ReadData("Europe", "CountryName", $"ID = {i}", 1)[0];
                 _countries.Add(country);
             }
 

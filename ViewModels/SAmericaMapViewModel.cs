@@ -24,7 +24,7 @@ namespace NEA_Project.ViewModels
         public SAmericaMapViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
-            if (_parent.Database.GetSize("SouthAmerica", "CountryID", "") == 0)
+            if (_parent.Database.GetSize("SouthAmerica", "ID", "") == 0)
             {
                 _parent.PopulateCountriesDatabase("SouthAmerica");
             }

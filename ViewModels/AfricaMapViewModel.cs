@@ -29,7 +29,7 @@ namespace NEA_Project.ViewModels
         public AfricaMapViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
-            if (_parent.Database.GetSize("Africa","CountryID","") == 0)
+            if (_parent.Database.GetSize("Africa","ID","") == 0)
             {
                 _parent.PopulateCountriesDatabase("Africa");
             }
