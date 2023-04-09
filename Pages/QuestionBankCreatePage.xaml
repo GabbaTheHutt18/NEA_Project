@@ -7,6 +7,28 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <StackPanel>
+            <TextBlock Text="HI THIS IS CREATE QUESTION BANK PAGE :D"/>
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
+                <TextBlock Text="QUESTION BANK NAME"/>
+                <TextBox VerticalAlignment ="Center" Width="200" Text="{Binding FileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Content = "CreateFile" Height = "30" Width = "120"
+                Command="{Binding CreateQuestionBankCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
+                <TextBlock Text="QUESTION"/>
+                <TextBox VerticalAlignment ="Center" Width="200" Text="{Binding Question, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
+                <TextBlock Text="ANSWER"/>
+                <TextBox VerticalAlignment ="Center" Width="200" Text="{Binding Answer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Content = "ADD QUESTION" Height = "30" Width = "120"
+                Command="{Binding AddToQuestionBankCommand}"/>
+            </StackPanel>
+            <Button Content = "BACK TO MENU" Height = "30" Width = "120"
+                Command="{Binding MenuButtonClickedCommand}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

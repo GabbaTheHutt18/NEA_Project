@@ -56,6 +56,7 @@ namespace NEA_Project.ViewModels
         public MainWindowViewModel()
         {
             Database.CreateTable("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(500)");
+            Database.CreateTable("QuestionBanks", "UserID INT, BankName VARCHAR(100), QuestionID INT, Question VARCHAR(100), Answer VARCHAR(150)");
             UserID = 1;
             LoginPageViewModel = new LoginPageViewModel(this);
             StartPageViewModel = new StartPageViewModel(this);

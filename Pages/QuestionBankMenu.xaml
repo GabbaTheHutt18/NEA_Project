@@ -18,6 +18,8 @@
                 Command="{Binding EditButtonClickedCommand}"/>
             <Button Content = "Read Questions" Height = "30" Width = "130"
                 Command="{Binding ReadButtonClickedCommand}"/>
+            <Button Content = "HOME PAGE" Height = "30" Width = "130"
+                Command="{Binding HomeButtonClickedCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

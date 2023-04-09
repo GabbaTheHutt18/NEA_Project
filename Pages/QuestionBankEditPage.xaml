@@ -7,6 +7,59 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <StackPanel>
+            <TextBlock Text="HI THIS IS EDIT QUESTION BANK PAGE :D"/>
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
+                <TextBlock Text="QUESTION BANK:"/>
+                <ComboBox 
+                  Width ="200"
+                  ItemsSource="{Binding Path=QuestionBankNames}"
+                  SelectedValue="{Binding Path=SelectedQuestionBankName,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   />
+
+                <Button Content = "Generate Question" Height = "30" Width = "120"
+                Command="{Binding SelectQuestionBankCommand}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
+                    <TextBlock Text="QUESTION"/>
+                    <ComboBox 
+                  Width ="200"
+                  ItemsSource="{Binding Path=Questions}"
+                  SelectedValue="{Binding Path= SelectedQuestion ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   />
+                    <Button Content = "Generate Question" Height = "30" Width = "120"
+                Command="{Binding SelectQuestionCommand}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="10,20,0,20">
+                    <TextBlock Text="NEW QUESTION"/>
+                    <TextBox VerticalAlignment ="Center" Width="200" Text="{Binding UpdatedQuestion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Content = "UPDATE QUESTION" Height = "30" Width = "120"
+                 Command="{Binding UpdateQuestionCommand}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Margin="8,20,0,20">
+                    <TextBlock Text="ANSWER"/>
+                    <ComboBox 
+                  Width ="200"
+                  ItemsSource="{Binding Path=Answers}"
+                  SelectedValue="{Binding Path=SelectedAnswer,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="40,20,0,20">
+                    <TextBlock Text="NEW ANSWER"/>
+                    <TextBox VerticalAlignment ="Center" Width="200" Text="{Binding UpdatedAnswer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Content = "UPDATE ANSWER" Height = "30" Width = "120"
+                 Command="{Binding UpdateAnswerCommand}"/>
+                </StackPanel>
+            </StackPanel>
+            <Button Content = "BACK TO MENU" Height = "30" Width = "120"
+                Command="{Binding MenuButtonClickedCommand}"/>
+            <Button Content = "REFRESH" Height = "30" Width = "120"
+                Command="{Binding RefreshButtonClickedCommand}"/>
+        </StackPanel>
     </Grid>
 </UserControl>
