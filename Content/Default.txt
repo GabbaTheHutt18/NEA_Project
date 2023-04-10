@@ -1,0 +1,3 @@
+﻿Bonjour, Hello
+Salut, Hi
+Au Revoir, Bye

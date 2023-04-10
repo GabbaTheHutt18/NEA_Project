@@ -33,9 +33,9 @@ namespace NEA_Project.ViewModels
         public void AddQuestionsAndAnswers()
         {
             int QuestionID = 0;
-            if (FileName == String.Empty)
+            if (FileName == String.Empty || FileName == "Default")
             {
-                MessageBox.Show("No bank exists, make sure you press create first!");
+                MessageBox.Show("Please Enter a suitable Question Bank Name! (Default is already in use)");
 
             }
             else

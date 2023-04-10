@@ -44,6 +44,7 @@ namespace NEA_Project.ViewModels
         public PairsGameViewModel PairsGameViewModel { get; set; }
 
         public int UserID { get; set; }
+        public string CurrentQuestionBank { get; set; }
 
         public ViewStates CurrentPage 
         {
@@ -58,6 +59,8 @@ namespace NEA_Project.ViewModels
             Database.CreateTable("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(500)");
             Database.CreateTable("QuestionBanks", "UserID INT, BankName VARCHAR(100), QuestionID INT, Question VARCHAR(100), Answer VARCHAR(150)");
             UserID = 1;
+            CurrentQuestionBank = "Default";
+            PopulateQuestionBank();
             LoginPageViewModel = new LoginPageViewModel(this);
             StartPageViewModel = new StartPageViewModel(this);
             SignUpPageViewModel = new SignUpPageViewModel(this);
@@ -202,11 +205,8 @@ namespace NEA_Project.ViewModels
             string TopFolder = @"../../../Content";
             string filename = Continent + ".txt";
             string fullPath = Path.Combine(TopFolder, filename);
-            //string fullPath = System.IO.Path.GetFullPath($"{filename}.txt");
             string[] lines = File.ReadAllLines(fullPath);
             List<string[]> test = new List<string[]>();
-            Hashtable help = new Hashtable();
-            Dictionary<int, string[]> countriesTest = new Dictionary<int, string[]>();
             Database.CreateTable($"{Continent}", "ID INT, CountryName VARCHAR(60),Population VARCHAR(100), LandArea VARCHAR(100), Density VARCHAR(100)");
             int count = 0;
             foreach (var item in lines)
@@ -221,16 +221,60 @@ namespace NEA_Project.ViewModels
                     count += 1;
                 }
             }
-            
-            
-            
-            
-
-            //return countries;
+       
         }
+
+        public List<string[]> GetTheText()
+        {
+            List<string[]> FileContent = new List<string[]>();
+
+
+            string TopFolder = @"../../../Content";
+            string filename = "Default.txt";
+            string fullPath = Path.Combine(TopFolder, filename);
+
+            string[] lines = File.ReadAllLines(fullPath);
+
+            int length = 0;
+
+            foreach (var item in lines)
+            {
+                item[length].ToString().Trim();
+                FileContent.Add(item.Split(","));
+            }
+            return FileContent;
+
+        }
+
+        public void PopulateQuestionBank()
+        {
+            
+            int size = GetCount("QuestionBanks");
+            if (size == 0)
+            {
+                List<string[]> FileContent = GetTheText();
+                GetTheText();
+                for (int i = 0; i < FileContent.Count; i++)
+                {
+                    Database.InsertData($"QuestionBanks", "UserID,BankName,QuestionID,Question,Answer", $"0,'Default', '{i}','{FileContent[i][0]}','{FileContent[i][1]}'");
+                    Database.CreateTable("QuestionBanks", "UserID INT, BankName VARCHAR(100), QuestionID INT, Question VARCHAR(100), Answer VARCHAR(150)");
+                }
+            }
+
+
+
+        }
+
+        public int GetCount(string tableName)
+        {
+            int Count = Database.GetSize(tableName, "Question", "");
+            return Count;
+        }
+
+
 
 
     }
 
-    
+
 }

@@ -54,7 +54,7 @@ namespace NEA_Project.ViewModels
 
         private void populateList()
         {
-            List<string> hi = _parent.Database.ReadData("QuestionBanks", "BankName", $"USERID = {_parent.UserID}", 1);
+            List<string> hi = _parent.Database.ReadData("QuestionBanks", "BankName", $"USERID = {_parent.UserID} OR UserID = 0", 1);
             foreach (string s in hi)
             {
                 if (!(_questionBank.Contains(s)))
@@ -70,7 +70,16 @@ namespace NEA_Project.ViewModels
             _answers.Clear();
             _selectedQuestion = String.Empty;
             MessageBox.Show($"{SelectedQuestionBankName}");
-            List<string> question = _parent.Database.ReadData("QuestionBanks", "Question", $"UserID = {_parent.UserID} AND BankName = '{SelectedQuestionBankName}'", 1);
+            int ID;
+            if (SelectedQuestionBankName == "Default")
+            {
+                ID = 0;
+            }
+            else
+            {
+                ID = _parent.UserID;
+            }
+            List<string> question = _parent.Database.ReadData("QuestionBanks", "Question", $"BankName = '{SelectedQuestionBankName}' AND USERID = {ID}", 1);
             foreach (string s in question)
             {
                 if (!(_questions.Contains(s)))
@@ -80,8 +89,17 @@ namespace NEA_Project.ViewModels
         }
 
         public void ShowAnswer()
-        { 
-            string hi = _parent.Database.ReadData("QuestionBanks", "Answer", $"Question = '{SelectedQuestion}' AND UserID = {_parent.UserID} AND BankName = '{SelectedQuestionBankName}'", 1)[0];
+        {
+            int ID;
+            if (SelectedQuestionBankName == "Default")
+            {
+                ID = 0;
+            }
+            else
+            {
+                ID = _parent.UserID;
+            }
+            string hi = _parent.Database.ReadData("QuestionBanks", "Answer", $"Question = '{SelectedQuestion}' AND BankName = '{SelectedQuestionBankName}' AND USERID = {ID}", 1)[0];
             MessageBox.Show(hi);
         }
     }

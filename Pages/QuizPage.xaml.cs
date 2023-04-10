@@ -18,7 +18,7 @@ namespace NEA_Project.Pages
     /// <summary>
     /// Interaction logic for QuizPage.xaml
     /// </summary>
-    public partial class QuizPage : Page
+    public partial class QuizPage : UserControl
     {
         public QuizPage()
         {
