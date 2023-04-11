@@ -332,7 +332,9 @@
                 </Style>
             </UserControl.Style>
 
-            <page:PairsGamePage DataContext="{Binding PairsGameViewModel}"/>
+            <page:PairsGamePage DataContext="{Binding PairsGameViewModel}" CheckPairCommand ="{Binding CheckPairCommand}" 
+                                TextBlockContains ="{Binding TextBlockContains}" TextBlock2Contains ="{Binding TextBlock2Contains}" 
+                                PairFound="{Binding PairFound}"/>
         </UserControl>
 
 

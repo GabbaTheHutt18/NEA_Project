@@ -99,7 +99,7 @@ namespace NEA_Project.ViewModels
                 MessageBox.Show($"neigh </3 {CorrectAnswer}");
                 Score -= 1;
             }
-
+            GetQuestion();
         }
 
         public string GetQuestion()
