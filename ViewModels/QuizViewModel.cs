@@ -24,7 +24,7 @@ namespace NEA_Project.ViewModels
         public QuizViewModel(MainWindowViewModel Parent) 
         {
             _parent = Parent;
-            VerifyButtonClickedCommand = new SimpleCommand(_ => VerifyButtonClicked());
+            VerifyButtonClickedCommand = new SimpleCommand(_ => GenerateQuestionButtonClicked());
             CheckAnswerCommand = new SimpleCommand(_ => CheckAnswer());
             FinishButtonCommand = new SimpleCommand(_ => FinishButtonClicked());
         }
@@ -54,7 +54,7 @@ namespace NEA_Project.ViewModels
         }
 
 
-        private void VerifyButtonClicked()
+        private void GenerateQuestionButtonClicked()
         {
 
             UserNameInput = GetQuestion();
