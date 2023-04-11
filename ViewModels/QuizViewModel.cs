@@ -113,8 +113,9 @@ namespace NEA_Project.ViewModels
             {
                 ID = _parent.UserID;
             }
-            int question = random.Next(_parent.Database.GetSize("QuestionBanks", "QuestionID", $"WHERE BankName = '{_parent.CurrentQuestionBank}' AND UserID = {ID}"));
+            int question = random.Next(1, _parent.Database.GetSize("QuestionBanks", "QuestionID", $"WHERE BankName = '{_parent.CurrentQuestionBank}' AND UserID = {ID}") + 1);
             return _parent.Database.ReadData("QuestionBanks", "Question", $"QuestionID = {question} AND BankName = '{_parent.CurrentQuestionBank}' AND UserID = {ID}", 1)[0];
+            //OUT OF RANGE ERROR, IDs Don't Start at 0 AND NEXT Max value is exclusive!!!
         }
     }
 }

@@ -256,8 +256,8 @@ namespace NEA_Project.ViewModels
                 GetTheText();
                 for (int i = 0; i < FileContent.Count; i++)
                 {
-                    Database.InsertData($"QuestionBanks", "UserID,BankName,QuestionID,Question,Answer", $"0,'Default', '{i}','{FileContent[i][0]}','{FileContent[i][1]}'");
-                    Database.CreateTable("QuestionBanks", "UserID INT, BankName VARCHAR(100), QuestionID INT, Question VARCHAR(100), Answer VARCHAR(150)");
+                    Database.InsertData($"QuestionBanks", "UserID,BankName,QuestionID,Question,Answer", $"0,'Default', '{i + 1}','{FileContent[i][0]}','{FileContent[i][1]}'");
+                    
                 }
             }
 
