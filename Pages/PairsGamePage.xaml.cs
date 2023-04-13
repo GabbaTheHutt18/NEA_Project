@@ -31,9 +31,6 @@ namespace NEA_Project.Pages
             set { SetValue(CheckPairCommandProperty, value); }
         }
 
-        //MainWindowViewModel _parent = new MainWindowViewModel();
-
-
         public static readonly DependencyProperty ParentProperty =
             DependencyProperty.Register("ParentVM", typeof(MainWindowViewModel), typeof(PairsGamePage),
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
@@ -58,7 +55,7 @@ namespace NEA_Project.Pages
         }
         public static readonly DependencyProperty TextBlockContainsProperty =
             DependencyProperty.Register("TextBlockContains", typeof(string), typeof(PairsGamePage),
-                new PropertyMetadata(default(MainWindowViewModel)));
+                new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public string TextBlockContains
         {
@@ -89,7 +86,7 @@ namespace NEA_Project.Pages
 
         private void CreateTextBlocks()
         {
-            
+
 
             Random random = new Random();
             PairsGameViewModel myDataObject = new PairsGameViewModel(ParentVM);
@@ -98,7 +95,8 @@ namespace NEA_Project.Pages
             Binding Answer = new Binding("Answer");
             Answer.Source = myDataObject;
             int Pairs = 0;
-            if (NumOfPairs.Text != null) {
+            if (NumOfPairs.Text != null)
+            {
                 try
                 {
                     Pairs = Int32.Parse(NumOfPairs.Text);
@@ -109,40 +107,41 @@ namespace NEA_Project.Pages
                     MessageBox.Show("NO");
                 }
             }
-            
-            
-            if ( Pairs != 0 ) 
+
+
+            if (Pairs != 0)
             {
-                for (int i = 0; i < Pairs; i++)
+                for (int i = 0; i < 2; i++)
                 {
+                    int height = (int)canvas.Height;
+                    int width = (int)canvas.Width;
                     myDataObject.Change = true;
                     int randomNum = random.Next(0, test.Count);
+                    int randomLeft = random.Next(0, width);
+                    int randomTop = random.Next(0, height);
                     TextBlock textblock = new TextBlock();
                     TextBlock textblock1 = new TextBlock();
                     textblock.SetBinding(TextBlock.TextProperty, Question);
                     textblock1.SetBinding(TextBlock.TextProperty, Answer);
-                    textblock1.SetBinding(TextBlock.TextProperty, Answer);
                     textblock.Width = 75;
                     textblock1.Width = 75;
-                    textblock1.Height = 20;
-                    textblock.Height = 20;
+                    textblock1.Height = 75;
+                    textblock.Height = 75;
                     canvas.Children.Add(textblock);
                     canvas.Children.Add(textblock1);
                     textblocks.Add(textblock);
                     textblocks.Add(textblock1);
+                    Canvas.SetLeft(textblock, randomLeft);
+                    Canvas.SetTop(textblock, randomTop);
                     myDataObject.Change = false;
                 }
 
-
-
                 for (int i = 0; i < textblocks.Count; i++)
                 {
-
                     textblocks[i].MouseMove += MouseMove;
-
                 }
             }
-            
+
 
         }
 
@@ -152,9 +151,7 @@ namespace NEA_Project.Pages
             {
                 if (textblocks[i].IsMouseOver)
                 {
-
                     whichElement = i;
-
                 }
 
             }
@@ -168,8 +165,6 @@ namespace NEA_Project.Pages
             GetElement();
             Canvas.SetLeft(textblocks[whichElement], dropPosition.X);
             Canvas.SetTop(textblocks[whichElement], dropPosition.Y);
-
-
         }
 
 
@@ -201,11 +196,12 @@ namespace NEA_Project.Pages
                         CheckPairCommand?.Execute(null);
                         if (PairFound)
                         {
-                            
-                            canvas.Children.Remove(textblocks[i]);
-                            canvas.Children.Remove(textblocks[whichElement]);
-                            textblocks.Remove(textblocks[i]);
-                            textblocks.Remove(textblocks[whichElement]);
+                            TextBlock temp1 = textblocks[i];
+                            TextBlock temp2 = textblocks[whichElement];
+                            canvas.Children.Remove(temp1);
+                            canvas.Children.Remove(temp2);
+                            textblocks.Remove(temp1);
+                            textblocks.Remove(temp2);
                             this.UpdateLayout();
                         }
                         if (canvas.Children.Count == 1)
@@ -218,8 +214,6 @@ namespace NEA_Project.Pages
 
             }
 
-            
-
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
@@ -230,7 +224,7 @@ namespace NEA_Project.Pages
                 textblocks.RemoveAt(i);
             }
             CreateTextBlocks();
-            
+
         }
     }
 }

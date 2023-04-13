@@ -14,6 +14,7 @@ namespace NEA_Project.ViewModels
         MainWindowViewModel _parent;
         private string _howManyPairs;
         public ICommand CheckPairCommand { get; }
+        public ICommand FinishButtonCommand { get; }
         private int _score = 0;
         private string _question = "pls";
         private string _answer = "hi";
@@ -32,6 +33,7 @@ namespace NEA_Project.ViewModels
             
             
             CheckPairCommand = new CheckPairCommand(this, _parent);
+            FinishButtonCommand = new SimpleCommand(_ => FinishButtonClicked());
         }
 
         public MainWindowViewModel ParentVM { get { return _parent; }
@@ -100,8 +102,7 @@ namespace NEA_Project.ViewModels
             }
             set
             {
-                _textBlockContains = value;
-                OnPropertyChanged(nameof(TextBlockContains));
+                RaiseAndSetIfChanged(ref _textBlockContains, value);
             }
         }
 
@@ -158,6 +159,26 @@ namespace NEA_Project.ViewModels
             return _parent.Database.ReadData("QuestionBanks", "Answer", $"Question LIKE '{_question}' AND QuestionID = {randomNum} AND BankName = '{_parent.CurrentQuestionBank}' AND UserID = {ID}",1)[0];
         }
 
+        private void FinishButtonClicked()
+        {
+            int existingScore = 0;
+            try
+            {
+                //string DatabaseScore = _parent.ScoreDatabase.ReadData("Scores", "QuizHighScore", $"USERID = {UserID}");
+                //existingScore = Int32.Parse(DatabaseScore);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            if (existingScore < Score)
+            {
+                //_parent.ScoreDatabase.UpdateData("Scores", $"QuizHighScore = {Score}", $"USERID = {UserID}");
+            }
+
+            _parent.ChangeToGameMenuPage();
+        }
 
     }
 }
