@@ -80,19 +80,19 @@ namespace NEA_Project.ViewModels
             int existingScore = 0;
             try
             {
-                //string DatabaseScore = _parent.ScoreDatabase.ReadData("Scores", "QuizHighScore", $"USERID = {UserID}");
-                //existingScore = Int32.Parse(DatabaseScore);
+                string DatabaseScore = _parent.Database.ReadData("UserStats", "HighScore3", $"USERID = {_parent.UserID}", 1)[0];
+                existingScore = Int32.Parse(DatabaseScore);
             }
             catch (Exception)
             {
 
-                throw;
+
             }
             if (existingScore < Score)
             {
-                //_parent.ScoreDatabase.UpdateData("Scores", $"QuizHighScore = {Score}", $"USERID = {UserID}");
+                _parent.Database.UpdateData("UserStats", $"HighScore3 = {Score}", $"USERID = {_parent.UserID}");
             }
-
+            Score = 0;
             _parent.ChangeToGameMenuPage();
         }
 

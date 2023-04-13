@@ -49,6 +49,8 @@ namespace NEA_Project.ViewModels
             
             if (CheckDataBase())
             {
+                string UserID = _parent.Database.ReadData("LoginDetails", "UserID", $"UserNames = '{_userNameInput}'", 1)[0];
+                _parent.UserID = Int32.Parse(UserID);
                 _parent.ChangeToHomePage();
             }
             else
@@ -74,7 +76,24 @@ namespace NEA_Project.ViewModels
         {
             byte[] hashedPassword = _parent.Hashing(_passwordInput);
             string stringHashedPassword = String.Join(" ", hashedPassword);
-            string correctPassword =_parent.Database.ReadData("LoginDetails", "Passwords", $"UserNames = '{_userNameInput}'",1)[0];
+            List<string> temp = new List<string>();
+            string correctPassword = "";
+            try
+            {
+                correctPassword = _parent.Database.ReadData("LoginDetails", "Passwords", $"UserNames = '{_userNameInput}'", 1)[0];
+                //temp = _parent.Database.ReadData("LoginDetails", "Passwords", $"UserNames = '{_userNameInput}'", 1);
+                if (temp.Count > 0)
+                {
+                    
+                }
+               
+            }
+            catch (Exception)
+            {
+
+                
+            }
+            
             
             
             if ((stringHashedPassword == correctPassword))

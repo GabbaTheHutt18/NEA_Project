@@ -6,7 +6,33 @@
              xmlns:local="clr-namespace:NEA_Project.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Background="White">
+        
+        <StackPanel>
+            <TextBlock Text="USER STATS PAGE" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="QUIZ " Margin="10,0"></TextBlock>
+                <TextBlock Text="{Binding QuizHighScore}" Width="40" Margin="10,0"></TextBlock>
+                <TextBlock Text="PAIRS GAME" Margin="10,0"></TextBlock>
+                <TextBlock Text="{Binding PairsHighScore}" Width="40" Margin="10,0"></TextBlock>
+                <TextBlock Text="WORD SCRAMBLE" Margin="10,0"></TextBlock>
+                <TextBlock Text="{Binding WordHighScore}" Width="100" Margin="10,0"></TextBlock>
+                <Button Content="Get Stats" Command="{Binding GetUserStatsCommand}" Width="50" Height="30"/>
             
+            </StackPanel>
+        
+            <StackPanel Orientation="Vertical">
+                <ComboBox 
+                    Width ="200" Height="20"
+                    ItemsSource="{Binding Path=HighScoresCategories}"
+                    SelectedValue="{Binding Path=selectedValue,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   />
+                <Button Content="Get Percentages" Command="{Binding GetPercentagesCommand}" Width="200" Height="30"/>
+
+            </StackPanel>
+            <Button Content = "HOME PAGE" Height = "30" Width = "130"
+                Command="{Binding HomeButtonClickedCommand}"/>
+
+        </StackPanel>
     </Grid>
 </UserControl>

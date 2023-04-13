@@ -18,6 +18,7 @@ namespace NEA_Project.ViewModels
         public ICommand QuestionBankMenuButtonClickedCommand { get; }
 
         public ICommand GameMenuButtonClickedCommand { get; }
+        public ICommand UserStatsButtonClickedCommand { get; }
 
         public HomePageViewModel(MainWindowViewModel parent)
         {
@@ -25,6 +26,7 @@ namespace NEA_Project.ViewModels
             MapButtonClickedCommand = new SimpleCommand(_ => MapButtonClicked());
             QuestionBankMenuButtonClickedCommand = new SimpleCommand(_ => QuestionBankButtonClicked());
             GameMenuButtonClickedCommand = new SimpleCommand(_ => GameMenuButtonClicked());
+            UserStatsButtonClickedCommand = new SimpleCommand(_=>UserStatsButtonClicked());
         }
 
         private void MapButtonClicked()
@@ -41,5 +43,9 @@ namespace NEA_Project.ViewModels
             _parent.ChangeToGameMenuPage();
         }
 
+        private void UserStatsButtonClicked()
+        { 
+            _parent.ChangeToUserStatsPage();
+        }
     }
 }

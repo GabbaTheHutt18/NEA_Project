@@ -15,7 +15,6 @@ namespace NEA_Project.ViewModels
         private string _userNameInput = "Enter Your Username Here...";
         private string _passwordInput = "Enter Your Password Here...";
         private int _score = 0;
-        public int UserID = 1;
         public Random random = new Random();
 
         public ICommand VerifyButtonClickedCommand { get; }
@@ -66,19 +65,19 @@ namespace NEA_Project.ViewModels
             int existingScore = 0;
             try
             {
-                //string DatabaseScore = _parent.ScoreDatabase.ReadData("Scores", "QuizHighScore", $"USERID = {UserID}");
-                //existingScore = Int32.Parse(DatabaseScore);
+                string DatabaseScore = _parent.Database.ReadData("UserStats", "HighScore1", $"USERID = {_parent.UserID}",1)[0];
+                existingScore = Int32.Parse(DatabaseScore);
             }
             catch (Exception)
             {
 
-                throw;
+                
             }
             if (existingScore < Score)
             {
-                //_parent.ScoreDatabase.UpdateData("Scores", $"QuizHighScore = {Score}", $"USERID = {UserID}");
+                _parent.Database.UpdateData("UserStats", $"HighScore1 = {Score}", $"USERID = {_parent.UserID}");
             }
-
+            Score = 0;
             _parent.ChangeToGameMenuPage();
         }
 

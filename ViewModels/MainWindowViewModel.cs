@@ -60,9 +60,9 @@ namespace NEA_Project.ViewModels
         public string CurrentQuestionBank { get =>_currentQuestionBank; set { _currentQuestionBank = value; } }
         public MainWindowViewModel()
         {
-            Database.CreateTable("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(500)");
+            Database.CreateTable("LoginDetails", "UserID INT, UserNames VARCHAR(20), Passwords VARCHAR(500)");
             Database.CreateTable("QuestionBanks", "UserID INT, BankName VARCHAR(100), QuestionID INT, Question VARCHAR(100), Answer VARCHAR(150)");
-            UserID = 1;
+            Database.CreateTable("UserStats", "UserID INT, HighScore1 INT, HighScore2 INT, HighScore3 INT");
             //CurrentQuestionBank = "Default";
             PopulateQuestionBank();
             LoginPageViewModel = new LoginPageViewModel(this);
