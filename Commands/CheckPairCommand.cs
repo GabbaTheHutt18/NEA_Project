@@ -58,19 +58,32 @@ namespace NEA_Project.Commands
             List<string> CheckWithTextBlock = _parent.Database.ReadData("QuestionBanks", "Answer", $"Question LIKE '{_vm.TextBlockContains}' AND BankName = '{_parent.CurrentQuestionBank}' AND UserID = { ID }", 1);
             string textblockContains = _vm.TextBlockContains;
             List<string> CheckWithTextBlock2 = _parent.Database.ReadData("QuestionBanks", "Answer", $"Question LIKE '{_vm.TextBlock2Contains}' AND BankName = '{_parent.CurrentQuestionBank}' AND UserID = {ID}", 1);
+            string tempTextBlock1 = "";
+            string tempTextBlock2 = "";
 
-            if (CheckWithTextBlock.Count == 0)
+            try
             {
-                if (textblockContains == CheckWithTextBlock2[0])
-                {
-                    found = true;
-                }
+                tempTextBlock1 = CheckWithTextBlock[0];
             }
-            else
+            catch (Exception)
             {
-                if (textblock2Contains == CheckWithTextBlock[0]) found = true;
+
+               
+            }
+            try
+            {
+                tempTextBlock2 = CheckWithTextBlock2[0];
+            }
+            catch (Exception)
+            {
+
                 
             }
+            if (textblockContains == tempTextBlock2 || textblock2Contains == tempTextBlock1)
+            {
+                found = true;
+            }
+            
 
             return found;
 

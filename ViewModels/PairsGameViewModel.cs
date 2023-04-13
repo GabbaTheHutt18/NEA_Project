@@ -12,6 +12,7 @@ namespace NEA_Project.ViewModels
     public class PairsGameViewModel : ObservableObject
     {
         MainWindowViewModel _parent;
+        private string _howManyPairs;
         public ICommand CheckPairCommand { get; }
         private int _score = 0;
         private string _question = "pls";
@@ -24,8 +25,31 @@ namespace NEA_Project.ViewModels
         private bool _change = false;
         public PairsGameViewModel(MainWindowViewModel Parent) 
         {
-            _parent = Parent;
+            if (_parent == null)
+            {
+                _parent = Parent;
+            }
+            
+            
             CheckPairCommand = new CheckPairCommand(this, _parent);
+        }
+
+        public MainWindowViewModel ParentVM { get { return _parent; }
+            set
+            {
+                _parent = value;
+                OnPropertyChanged(nameof(_parent));
+            }
+        }
+
+        public string HowManyPairs
+        {
+            get => _howManyPairs;
+            set
+            {
+                //value = "pls";
+                RaiseAndSetIfChanged(ref _howManyPairs, value);
+            }
         }
 
         public bool Change

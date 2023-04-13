@@ -1,4 +1,5 @@
-﻿using NEA_Project.ViewModels;
+﻿using NEA_Project.Pages;
+using NEA_Project.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +22,13 @@ namespace NEA_Project
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
             var vm = new MainWindowViewModel();
             this.DataContext = vm;
+            
         }
         
     }

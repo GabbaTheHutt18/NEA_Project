@@ -334,7 +334,7 @@
 
             <page:PairsGamePage DataContext="{Binding PairsGameViewModel}" CheckPairCommand ="{Binding CheckPairCommand}" 
                                 TextBlockContains ="{Binding TextBlockContains}" TextBlock2Contains ="{Binding TextBlock2Contains}" 
-                                PairFound="{Binding PairFound}"/>
+                                PairFound="{Binding PairFound}" ParentVM="{Binding ParentVM}"/>
         </UserControl>
 
 

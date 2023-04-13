@@ -1,5 +1,6 @@
 ﻿using NEA_Project.Constants;
 using NEA_Project.Helpers;
+using NEA_Project.Pages;
 using SQLDatabase;
 using System;
 using System.Collections;
@@ -42,9 +43,10 @@ namespace NEA_Project.ViewModels
         public QuizViewModel QuizViewModel { get; set; }
         public WordScrambleViewModel WordScrambleViewModel { get; set; }
         public PairsGameViewModel PairsGameViewModel { get; set; }
+       
 
         public int UserID { get; set; }
-        public string CurrentQuestionBank { get; set; }
+        
 
         public ViewStates CurrentPage 
         {
@@ -54,12 +56,14 @@ namespace NEA_Project.ViewModels
                 RaiseAndSetIfChanged(ref _currentPage, value);
             }
         }
+        private string _currentQuestionBank = "Default";
+        public string CurrentQuestionBank { get =>_currentQuestionBank; set { _currentQuestionBank = value; } }
         public MainWindowViewModel()
         {
             Database.CreateTable("LoginDetails", "UserNames VARCHAR(20), Passwords VARCHAR(500)");
             Database.CreateTable("QuestionBanks", "UserID INT, BankName VARCHAR(100), QuestionID INT, Question VARCHAR(100), Answer VARCHAR(150)");
             UserID = 1;
-            CurrentQuestionBank = "Default";
+            //CurrentQuestionBank = "Default";
             PopulateQuestionBank();
             LoginPageViewModel = new LoginPageViewModel(this);
             StartPageViewModel = new StartPageViewModel(this);
@@ -82,6 +86,7 @@ namespace NEA_Project.ViewModels
             QuizViewModel = new QuizViewModel(this);
             WordScrambleViewModel = new WordScrambleViewModel(this);
             PairsGameViewModel = new PairsGameViewModel(this);
+            
 
         }
 
