@@ -60,9 +60,9 @@ namespace NEA_Project.ViewModels
 
         public void GetUserStats()
         {
-            _quizHighScore = _parent.Database.ReadData("UserStats","HighScore1",$"UserID = {_parent.UserID}",1)[0];
-            _pairsHighScore = _parent.Database.ReadData("UserStats", "HighScore2", $"UserID = {_parent.UserID}", 1)[0];
-            _wordScrambleHighScore = _parent.Database.ReadData("UserStats", "HighScore3", $"UserID = {_parent.UserID}", 1)[0];
+            QuizHighScore = _parent.Database.ReadData("UserStats","HighScore1",$"UserID = {_parent.UserID}",1)[0];
+            PairsHighScore = _parent.Database.ReadData("UserStats", "HighScore2", $"UserID = {_parent.UserID}", 1)[0];
+            WordHighScore = _parent.Database.ReadData("UserStats", "HighScore3", $"UserID = {_parent.UserID}", 1)[0];
         }
         
         public void GetPercentage()
@@ -71,20 +71,20 @@ namespace NEA_Project.ViewModels
             //Quiz HighScore", "Pairs HighScore", "Word Scramble HighScore
             if (_selectedHighScore == "Quiz HighScore")
             {
-                SortedHighScores1 = PopulateSortedLists(HighScore1);
-                HowMuchBetterHS1 = CalculatePercentile(SortedHighScores1, 3);
+                SortedHighScores1 = PopulateSortedLists(HighScore1, 0);
+                HowMuchBetterHS1 = CalculatePercentile(SortedHighScores1, _parent.UserID);
                 MessageBox.Show($"User is {HowMuchBetterHS1}% better than other users at Quiz");
             }
             else if (_selectedHighScore == "Pairs HighScore")
             {
-                SortedHighScores2 = PopulateSortedLists(HighScore2);
-                HowMuchBetterHS2 = CalculatePercentile(SortedHighScores2, 3);
+                SortedHighScores2 = PopulateSortedLists(HighScore2,1);
+                HowMuchBetterHS2 = CalculatePercentile(SortedHighScores2, _parent.UserID);
                 MessageBox.Show($"User is {HowMuchBetterHS2}% better than other users at Pairs");
             }
             else if (_selectedHighScore == "Word Scramble HighScore")
             {
-                SortedHighScores3 = PopulateSortedLists(HighScore3);
-                HowMuchBetterHS3 = CalculatePercentile(SortedHighScores3, 3);
+                SortedHighScores3 = PopulateSortedLists(HighScore3, 2);
+                HowMuchBetterHS3 = CalculatePercentile(SortedHighScores3, _parent.UserID);
                 MessageBox.Show($"User is {HowMuchBetterHS3}% better than other users at Word Scramble");
             }
             
@@ -93,6 +93,7 @@ namespace NEA_Project.ViewModels
 
         public void PopulateUnsortedLists()
         {
+            HighScores.Clear();
             for (int i = 0; i < _parent.Database.GetSize("UserStats", "UserID", ""); i++)
             {
                 
@@ -102,26 +103,28 @@ namespace NEA_Project.ViewModels
                 HighScore1.Add(HighScores[i + 1][0]);
                 HighScore2.Add(HighScores[i + 1][1]);
                 HighScore3.Add(HighScores[i + 1][2]); //forgot to add 1 
+                
+                
+                 
 
             }
 
         }
 
-        public List<Dictionary<int, int>> PopulateSortedLists(List<int> HighScore)
+        public List<Dictionary<int, int>> PopulateSortedLists(List<int> HighScore, int i)
         {
             MergeSort.Sort(HighScore);
             List<Dictionary<int, int>> SortedHighScores = new List<Dictionary<int, int>>();
-            MergeSort.Sort(HighScore2);
-            MergeSort.Sort(HighScore3);
+            
 
             foreach (var item in HighScore)
             {
 
                 foreach (var ID in HighScores)
                 {
-                    if (ID.Value[0] == item)
+                    if (ID.Value[i] == item)
                     {
-                        //Console.WriteLine($"The value {item} is in the list for key {ID.Key}");
+                        
                         try
                         {
                             //SortedHighScores1[ID.Key] = item;
@@ -147,7 +150,11 @@ namespace NEA_Project.ViewModels
             List<int> HighScores = new List<int>();
             for (int i = 0; i < temp.Count; i++)
             {
-                HighScores.Add(Int32.Parse(temp[i]));
+                if (!HighScores.Contains(Int32.Parse(temp[i])))
+                {
+                    HighScores.Add(Int32.Parse(temp[i]));
+                }
+                
             }
 
 
@@ -156,10 +163,11 @@ namespace NEA_Project.ViewModels
 
         public double CalculatePercentile(List<Dictionary<int, int>> HighScores, int UserID)
         {
+            _userPercentile = 0;
             int position = -1;
             for (int i = 0; i < HighScores.Count; i++)
             {
-                if (HighScores[i].ContainsKey(UserID - 1))
+                if (HighScores[i].ContainsKey(UserID))
                 {
                     position = i;
                     break;

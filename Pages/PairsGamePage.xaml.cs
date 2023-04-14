@@ -95,11 +95,13 @@ namespace NEA_Project.Pages
             Binding Answer = new Binding("Answer");
             Answer.Source = myDataObject;
             int Pairs = 0;
+            bool validNumber = false;
             if (NumOfPairs.Text != null)
             {
                 try
                 {
                     Pairs = Int32.Parse(NumOfPairs.Text);
+                    validNumber = true;
                 }
                 catch (Exception)
                 {
@@ -109,9 +111,9 @@ namespace NEA_Project.Pages
             }
 
 
-            if (Pairs != 0)
+            if (Pairs != 0 && validNumber)
             {
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < Pairs; i++)
                 {
                     int height = (int)canvas.Height;
                     int width = (int)canvas.Width;
