@@ -71,7 +71,7 @@ namespace NEA_Project.ViewModels
 
         }
 
-        private void GoToMapPageCommand()
+        public void GoToMapPageCommand()
         {
             _parent.ChangeToContinentsMap();        
         }

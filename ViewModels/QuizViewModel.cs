@@ -12,8 +12,8 @@ namespace NEA_Project.ViewModels
     public class QuizViewModel : ObservableObject
     {
         MainWindowViewModel _parent;
-        private string _userNameInput = "Enter Your Username Here...";
-        private string _passwordInput = "Enter Your Password Here...";
+        private string _question = "";
+        private string _userInput = "";
         private int _score = 0;
         public Random random = new Random();
 
@@ -27,22 +27,22 @@ namespace NEA_Project.ViewModels
             CheckAnswerCommand = new SimpleCommand(_ => CheckAnswer());
             FinishButtonCommand = new SimpleCommand(_ => FinishButtonClicked());
         }
-        public string UserNameInput
+        public string Question
         {
-            get => _userNameInput;
+            get => _question;
             set
             {
-                RaiseAndSetIfChanged(ref _userNameInput, value);
+                RaiseAndSetIfChanged(ref _question, value);
             }
         }
 
-        public string PasswordInput
+        public string UserInput
         {
-            get => _passwordInput;
+            get => _userInput;
             set
             {
                 //value = "pls";
-                RaiseAndSetIfChanged(ref _passwordInput, value);
+                RaiseAndSetIfChanged(ref _userInput, value);
             }
         }
 
@@ -56,7 +56,7 @@ namespace NEA_Project.ViewModels
         private void GenerateQuestionButtonClicked()
         {
 
-            UserNameInput = GetQuestion();
+            Question = GetQuestion();
 
         }
 
@@ -85,8 +85,8 @@ namespace NEA_Project.ViewModels
         public void CheckAnswer()
         {
 
-            string answer = PasswordInput.Trim();
-            string CorrectAnswer = _parent.Database.ReadData("QuestionBanks", "Answer", $"Question LIKE '{UserNameInput}' AND BankName = '{_parent.CurrentQuestionBank}' AND (UserID = {_parent.UserID} OR UserID = 0)",1)[0];
+            string answer = UserInput.Trim();
+            string CorrectAnswer = _parent.Database.ReadData("QuestionBanks", "Answer", $"Question LIKE '{Question}' AND BankName = '{_parent.CurrentQuestionBank}' AND (UserID = {_parent.UserID} OR UserID = 0)",1)[0];
 
             if (answer == CorrectAnswer.Trim())
             {

@@ -16,7 +16,6 @@ namespace NEA_Project.ViewModels
         private ObservableCollection<string> _questionBank = new ObservableCollection<string>();
         private ObservableCollection<string> _questions = new ObservableCollection<string>();
         private ObservableCollection<string> _answers = new ObservableCollection<string>();
-        private List<string> _test = new List<string>();
         private string _selectedQuestionBankName = "";
         private string _selectedQuestion = "";
         private string _selectedAnswer = "";

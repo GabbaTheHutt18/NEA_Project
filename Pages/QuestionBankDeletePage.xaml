@@ -13,22 +13,17 @@
                 <TextBlock Text="QUESTION:"/>
                 <ComboBox 
                   Width ="200"
-                  ItemsSource="{Binding Path=testing}"
+                  ItemsSource="{Binding Path=QuestionBanks}"
                   SelectedValue="{Binding Path=selectedValue,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                    />
                 <TextBlock VerticalAlignment ="Center" Width="200" Text="{Binding UserNameInput, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock VerticalAlignment ="Center" HorizontalAlignment="Right" Width="200" Text="{Binding Score, UpdateSourceTrigger=PropertyChanged}"/>
 
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
-                <TextBlock Text="ANSWER:"/>
-
-                <TextBox VerticalAlignment ="Center" Width="200" Text="{Binding PasswordInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </StackPanel>
-            <Button Content = "Generate Question" Height = "30" Width = "120"
+            <Button Content = "Delete" Height = "30" Width = "120"
                 Command="{Binding CheckingButton}"/>
-            <Button Content = "Check Answer" Height = "30" Width = "80"
-                Command="{Binding CheckAnswerCommand}"/>
+            <Button Content = "Refresh" Height = "30" Width = "80"
+                Command="{Binding RefreshButtonClickedCommand}"/>
             <Button Content = "BACK TO MENU" Height = "30" Width = "120"
                 Command="{Binding MenuButtonClickedCommand}"/>
         </StackPanel>

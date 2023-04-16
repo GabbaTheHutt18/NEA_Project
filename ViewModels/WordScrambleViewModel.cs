@@ -109,18 +109,30 @@ namespace NEA_Project.ViewModels
 
         public void CheckAnswer()
         {
+            try
+            {
+                if (UserInput != null && Answer != null)
+                {
+                    if (UserInput.Trim().ToUpper() == Answer.Trim().ToUpper())
+                    {
+                        MessageBox.Show("yay!");
+                        Score += 1;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"neigh </3 {Answer}");
+                        Score -= 1;
+                    }
+                   
+                }
+                
+            }
+            catch (Exception)
+            {
 
-            if (UserInput.Trim().ToUpper() == Answer.Trim().ToUpper())
-            {
-                MessageBox.Show("yay!");
-                Score += 1;
+                
             }
-            else
-            {
-                MessageBox.Show($"neigh </3 {Answer}");
-                Score -= 1;
-            }
-            GetAnagram();
+            
 
         }
 
@@ -169,20 +181,20 @@ namespace NEA_Project.ViewModels
             
         }
 
-        private void Permute(char[] arr, int i, int n, ref List<string> list)
+        private void Permute(char[] arr, int start, int end, ref List<string> list)
         {
-            if (i == n)
+            if (start == end)
             {
                 //Console.WriteLine(new string(arr));
                 list.Add(new string(arr));
             }
             else
             {
-                for (int j = i; j <= n; j++)
+                for (int j = start; j <= end; j++)
                 {
-                    Swap(ref arr[i], ref arr[j]);
-                    Permute(arr, i + 1, n, ref list);
-                    Swap(ref arr[i], ref arr[j]);
+                    Swap(ref arr[start], ref arr[j]);
+                    Permute(arr, start + 1, end, ref list);
+                    Swap(ref arr[start], ref arr[j]);
                 }
             }
         }

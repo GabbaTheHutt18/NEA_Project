@@ -8,6 +8,7 @@ namespace NEA_Project.Constants
 {
     public enum ViewStates
     {
+        //Assigning an integer to each user control to successfully display them. 
         StartPage = 0,
         LoginPage = 1,
         SignUpPage = 2,
@@ -31,3 +32,5 @@ namespace NEA_Project.Constants
         PairsGamePage = 20,
     }
 }
+
+

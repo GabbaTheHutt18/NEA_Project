@@ -11,7 +11,7 @@
             <TextBlock Text="HI THIS IS CREATE QUESTION BANK PAGE :D"/>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
                 <TextBlock Text="QUESTION BANK NAME"/>
-                <TextBox VerticalAlignment ="Center" Width="200" Text="{Binding FileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox VerticalAlignment ="Center" Width="200" Text="{Binding BankName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Content = "CreateFile" Height = "30" Width = "120"
                 Command="{Binding CreateQuestionBankCommand}"/>
             </StackPanel>

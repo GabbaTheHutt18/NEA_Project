@@ -16,11 +16,10 @@ namespace NEA_Project.ViewModels
         public ICommand CheckPairCommand { get; }
         public ICommand FinishButtonCommand { get; }
         private int _score = 0;
-        private string _question = "pls";
-        private string _answer = "hi";
+        private string _question = "";
+        private string _answer = "";
         private bool _pairFound = false;
         Random random = new Random();
-        public List<string[]> test = new List<string[]>();
         int randomNum { get; set; }
 
         private bool _change = false;

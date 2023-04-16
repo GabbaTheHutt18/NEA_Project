@@ -4,6 +4,7 @@ using System.ComponentModel;
 
 using System.Runtime.CompilerServices;
 
+//Based on: Microsoft Learn
 namespace NEA_Project.Helpers
 {
     public abstract class ObservableObject : INotifyPropertyChanged
@@ -29,7 +30,8 @@ namespace NEA_Project.Helpers
 
         /// </summary>
 
-        protected virtual bool RaiseAndSetIfChanged<TProperty>(ref TProperty field,TProperty value,[CallerMemberName] string propertyName = null)
+        protected virtual bool RaiseAndSetIfChanged<TProperty>(ref TProperty field,
+            TProperty value,[CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<TProperty>.Default.Equals(field, value))
                 return false;

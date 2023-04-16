@@ -13,18 +13,20 @@ namespace NEA_Project.ViewModels
     public class QuestionBankDeleteViewModel : ObservableObject
     {
         MainWindowViewModel _parent;
-        private ObservableCollection<string> _test = new ObservableCollection<string>();
-        private string _selectedValue = "hi";
+        private ObservableCollection<string> _questionBanks = new ObservableCollection<string>();
+        private string _selectedValue = "";
         public ICommand CheckingButton { get; }
         public ICommand MenuButtonClickedCommand { get; }
+        public ICommand RefreshButtonClickedCommand { get; }
         public QuestionBankDeleteViewModel(MainWindowViewModel Parent) 
         {
             _parent = Parent;
-            populateList();
+            PopulateList();
             MenuButtonClickedCommand = new SimpleCommand(_ => MenuButtonClicked());
             CheckingButton = new SimpleCommand(_ => DeleteButton());
+            RefreshButtonClickedCommand = new SimpleCommand(_ => RefreshButtonClicked());
         }
-        public ObservableCollection<string> testing { get => _test; set { RaiseAndSetIfChanged(ref _test, value); } }
+        public ObservableCollection<string> QuestionBanks { get => _questionBanks; set { RaiseAndSetIfChanged(ref _questionBanks, value); } }
 
         public string selectedValue { get => _selectedValue; set { _selectedValue = value; } }
 
@@ -35,20 +37,24 @@ namespace NEA_Project.ViewModels
             {
                 //do no stuff
                 _parent.Database.DeleteData("QuestionBanks", $"BankName = '{selectedValue}'");
-                _test.Remove(_selectedValue);
+                _questionBanks.Remove(_selectedValue);
                 MessageBox.Show("Successfully Deleted!");
             }
 
 
         }
-        private void populateList()
+        public void RefreshButtonClicked()
         {
-            //int size = _parent.Database.GetSize("QuestionBanks", "UserID", "");
+            PopulateList();
+        }
+        private void PopulateList()
+        {
+            
             List<string> hi = _parent.Database.ReadData("QuestionBanks", "BankName", $"USERID = {_parent.UserID}",1);
             foreach (string s in hi)
             {
-                if (!(_test.Contains(s)))
-                { _test.Add(s); }
+                if (!(_questionBanks.Contains(s)))
+                { _questionBanks.Add(s); }
             }
 
         }

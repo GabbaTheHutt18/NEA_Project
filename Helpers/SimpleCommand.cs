@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Windows.Input;
 
+// Based on: Learn Microsoft
 namespace NEA_Project.Helpers
 {
+    // Both classes are used to define what commands can be assigned to UI Elements
     public class SimpleCommand : SimpleCommand<object>
     {
         public SimpleCommand(Action<object> action) : base(action)

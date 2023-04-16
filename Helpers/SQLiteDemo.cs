@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace SQLDatabase
 {
+    //Based on: https://www.codeguru.com/dotnet/using-sqlite-in-a-c-application/
     public class Database
     {
         private SQLiteConnection Connection { get; set; }
 
         public Database()
         {
-            Connection = CreateConnection();
-            //CreateTable(tablename, tableRequirements);
+            Connection = CreateConnection();;
 
         }
 
@@ -22,7 +22,7 @@ namespace SQLDatabase
         {
 
             SQLiteConnection sqlite_conn;
-            // Create a new database connection:
+            // Creates the connection:
             sqlite_conn = new SQLiteConnection("Data Source=database.db; Version = 3; New = True; Compress = True; ");
             // Open the connection:
             try
@@ -38,6 +38,7 @@ namespace SQLDatabase
 
         public void Execute(string query)
         {
+            //All the methods that do not return anything, such as create table, are all executed here. 
             SQLiteCommand sqlite_cmd;
             sqlite_cmd = Connection.CreateCommand();
             sqlite_cmd.CommandText = query;
@@ -48,14 +49,15 @@ namespace SQLDatabase
 
         public void CreateTable(string tablename, string tableRequirements)
         {
+            //Creates the SQL Statements
             string Createsql = $"CREATE TABLE IF NOT EXISTS {tablename}({tableRequirements});";
+            //Calls the Execute Method 
             Execute(Createsql);
         }
 
         public void InsertData(string tablename, string columns, string values)
         {
             string Insertsql = $"INSERT INTO {tablename}({columns}) VALUES({values}); ";
-
             Execute(Insertsql);
         }
 
@@ -70,7 +72,7 @@ namespace SQLDatabase
         {
             SQLiteDataReader sqlite_datareader;
             SQLiteCommand sqlite_cmd;
-            //string myreader = "";
+            //myreader - Holds any data that is returned select
             List<string> myreader = new List<string>();
             sqlite_cmd = Connection.CreateCommand();
             sqlite_cmd.CommandText = $"SELECT {Column} FROM {tablename} WHERE {condition};";
@@ -78,25 +80,27 @@ namespace SQLDatabase
             sqlite_datareader = sqlite_cmd.ExecuteReader();
             while (sqlite_datareader.Read())
             {
-                //myreader = sqlite_datareader.GetString(0);
+                // The for loop makes sure that multiple fields from the same record can be returned 
                 for (int i = 0; i < NoColums; i++)
                 {
+                    //as not all of the fields are strings, the catch handles any of the integer fields
                     try
                     {
+                        //adds i (field) to myreader 
                         myreader.Add(sqlite_datareader.GetString(i));
                     }
                     catch (Exception)
                     {
                         int temp = (sqlite_datareader.GetInt32(i));
                         myreader.Add(temp.ToString());
-                        //myreader.Add(sqlite_datareader.GetInt32(i));
+                        
                     }
                 }
-                
 
-                // Console.WriteLine(myreader);
+
+
             }
-            //Connection.Close();
+            
             return myreader;
         }
 
@@ -114,17 +118,14 @@ namespace SQLDatabase
 
         public int GetSize(string tablename, string ID, string Condition)
         {
+            //This gets the size of a database and returns the value
             SQLiteDataReader sqlite_datareader;
             SQLiteCommand sqlite_cmd;
-            string myreader = "";
             int Count = 0;
             sqlite_cmd = Connection.CreateCommand();
             sqlite_cmd.CommandText = $"SELECT COUNT({ID}) FROM {tablename} {Condition};";
             Count = Convert.ToInt32(sqlite_cmd.ExecuteScalar());
             sqlite_datareader = sqlite_cmd.ExecuteReader();
-
-            //Connection.Close();
-
 
             return Count;
         }
