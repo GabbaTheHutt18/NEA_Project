@@ -16,6 +16,7 @@ namespace NEA_Project.ViewModels
 {
     public class MainWindowViewModel : ObservableObject
     {
+        //Initialise
         private ViewStates _currentPage = ViewStates.StartPage;
         
         public Database Database = new Database();
@@ -58,12 +59,12 @@ namespace NEA_Project.ViewModels
         }
         private string _currentQuestionBank = "Default";
         public string CurrentQuestionBank { get =>_currentQuestionBank; set { _currentQuestionBank = value; } }
+        //Constructor
         public MainWindowViewModel()
         {
             Database.CreateTable("LoginDetails", "UserID INT, UserNames VARCHAR(20), Passwords VARCHAR(500)");
             Database.CreateTable("QuestionBanks", "UserID INT, BankName VARCHAR(100), QuestionID INT, Question VARCHAR(100), Answer VARCHAR(150)");
             Database.CreateTable("UserStats", "UserID INT, HighScore1 INT, HighScore2 INT, HighScore3 INT");
-            //CurrentQuestionBank = "Default";
             PopulateQuestionBank();
             LoginPageViewModel = new LoginPageViewModel(this);
             StartPageViewModel = new StartPageViewModel(this);
@@ -90,6 +91,7 @@ namespace NEA_Project.ViewModels
 
         }
 
+        //When called the Current Page is assigned the ViewStates of the corresponding UserControl, this enables the MainWindow to update
         public void ChangeToLoginPage()
         {
            
@@ -185,6 +187,7 @@ namespace NEA_Project.ViewModels
 
 
 
+        //Using the inbuilt Hashing function SHA256, gets string input, converts into an array of ascii value, returns the hashed value
 
         public byte[] Hashing(string userInput)
         {
@@ -205,6 +208,7 @@ namespace NEA_Project.ViewModels
             return result;
         }
 
+        //Gets the which continent, then reads a text file, which then is split into different arrays, before being added to the database
         public void PopulateCountriesDatabase(string Continent)
         {
             string TopFolder = @"../../../Content";
@@ -229,6 +233,7 @@ namespace NEA_Project.ViewModels
        
         }
 
+        //Reads a text file (containing the default questions), then is split into different arrays, before being added a list of arrays
         public List<string[]> GetTheText()
         {
             List<string[]> FileContent = new List<string[]>();
@@ -251,14 +256,15 @@ namespace NEA_Project.ViewModels
 
         }
 
+        //Using the default text file, the Questions and Answers are saved to the database, alongside a unique Question ID
         public void PopulateQuestionBank()
         {
             
-            int size = GetCount("QuestionBanks");
+            int size = Database.GetSize("QuestionBanks", "QuestionID", "");
+            //If Question Banks is empty then populate the database
             if (size == 0)
             {
                 List<string[]> FileContent = GetTheText();
-                GetTheText();
                 for (int i = 0; i < FileContent.Count; i++)
                 {
                     Database.InsertData($"QuestionBanks", "UserID,BankName,QuestionID,Question,Answer", $"0,'Default', '{i + 1}','{FileContent[i][0]}','{FileContent[i][1]}'");
@@ -266,18 +272,7 @@ namespace NEA_Project.ViewModels
                 }
             }
 
-
-
         }
-
-        public int GetCount(string tableName)
-        {
-            int Count = Database.GetSize(tableName, "Question", "");
-            return Count;
-        }
-
-
-
 
     }
 

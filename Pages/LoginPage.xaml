@@ -9,6 +9,7 @@
      >
 
     <Grid>
+        <!-- Databinding that link to the view model: Username and Password TextBox, allow user to input and button is linked to a command -->
         <StackPanel>
             <TextBlock Text="THIS IS THE LOGIN PAGE"/>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,20">

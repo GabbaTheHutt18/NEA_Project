@@ -11,14 +11,12 @@
       >
 
     <Grid Background="White">
+        <!-- Buttons with databinding that link to the page's view model  -->
         <Button Content = "Log in" Height = "30" Width = "80"
                 Command="{Binding LoginButtonClickedCommand}"/>
-        
+
         <TextBlock Text = "Don't have an account?" 
          Height = "30" Margin = "210,180,122,109"/>
-
-        <TextBlock Text = "{Binding DebugText}" 
-         Height = "30" Margin = "20,180,122,109"/>
 
         <Button Content = "Sign Up" Height = "20" Width = "50" Margin = "245,164,122,109" 
               Command= "{Binding SignUpButtonClickedCommand}"/>

@@ -11,6 +11,7 @@ namespace NEA_Project.ViewModels
 {
     public class QuestionBankMenuViewModel
     {
+        //initialise 
         private MainWindowViewModel _parent;
         public ICommand HomeButtonClickedCommand { get; }
         public ICommand CreateButtonClickedCommand { get; }
@@ -18,7 +19,7 @@ namespace NEA_Project.ViewModels
         public ICommand ReadButtonClickedCommand { get; }
         public ICommand EditButtonClickedCommand { get; }
 
-
+        //constructor
         public QuestionBankMenuViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
@@ -29,25 +30,29 @@ namespace NEA_Project.ViewModels
             EditButtonClickedCommand = new SimpleCommand(_ => EditButtonClicked());
         }
 
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void HomeButtonClicked()
         {
             _parent.ChangeToHomePage();
         }
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void CreateButtonClicked()
         {
             _parent.ChangeToQuestionBankCreatePage();
 
         }
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void DeleteButtonClicked()
         {
             _parent.ChangeToQuestionBankDeletePage();
 
         }
-
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void ReadButtonClicked()
         {
             _parent.ChangeToQuestionBankReadPage();
         }
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void EditButtonClicked()
         {
             _parent.ChangeToQuestionBankEditPage();

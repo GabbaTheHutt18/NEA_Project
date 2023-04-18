@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <!--Data binding to the view model: finish button and refresh button, TextBox that the user enters how many pairs they'd like 
+        and a Score textblock that outputs the user's score. A canvas is also defined, which is the area where the 
+        drag and drop game takes place -->
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="5*"/>

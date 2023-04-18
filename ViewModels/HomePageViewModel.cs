@@ -12,6 +12,7 @@ namespace NEA_Project.ViewModels
 {
     public class HomePageViewModel : ObservableObject
     {
+        //Initialise 
         private MainWindowViewModel _parent;
 
         public ICommand MapButtonClickedCommand { get; }
@@ -19,7 +20,7 @@ namespace NEA_Project.ViewModels
 
         public ICommand GameMenuButtonClickedCommand { get; }
         public ICommand UserStatsButtonClickedCommand { get; }
-
+        //Constructor
         public HomePageViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
@@ -29,20 +30,22 @@ namespace NEA_Project.ViewModels
             UserStatsButtonClickedCommand = new SimpleCommand(_=>UserStatsButtonClicked());
         }
 
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void MapButtonClicked()
         {
             _parent.ChangeToContinentsMap();
         }
-
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void QuestionBankButtonClicked()
         {
             _parent.ChangeToQuestionBankMenuPage();
         }
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void GameMenuButtonClicked()
         {
             _parent.ChangeToGameMenuPage();
         }
-
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void UserStatsButtonClicked()
         { 
             _parent.ChangeToUserStatsPage();

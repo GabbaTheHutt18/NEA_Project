@@ -11,6 +11,7 @@ namespace NEA_Project.ViewModels
 {
     public class GameMenuViewModel:ObservableObject
     {
+        //Initialise 
         MainWindowViewModel _parent;
         public ICommand HomeButtonClickedCommand { get; }
         public ICommand PairsGameButtonClickedCommand { get; }
@@ -18,9 +19,9 @@ namespace NEA_Project.ViewModels
         public ICommand QuizButtonClickedCommand { get; }
         public ICommand RefreshButtonClickedCommand { get; }
 
-        private ObservableCollection<string> _test = new ObservableCollection<string>();
-        //private string _selectedValue = "hi";
-
+        private ObservableCollection<string> _questionBanks = new ObservableCollection<string>();
+        
+        //Constructor 
         public GameMenuViewModel(MainWindowViewModel Parent) 
         {
             _parent = Parent;
@@ -30,37 +31,44 @@ namespace NEA_Project.ViewModels
             QuizButtonClickedCommand = new SimpleCommand(_ => QuizButtonClicked());
             RefreshButtonClickedCommand = new SimpleCommand(_ => RefreshButtonClicked());
         }
-        public ObservableCollection<string> testing { get => _test; set { RaiseAndSetIfChanged(ref _test, value); } }
+        public ObservableCollection<string> QuestionBanks { get => _questionBanks; set { RaiseAndSetIfChanged(ref _questionBanks, value); } }
 
         public string selectedValue { get => _parent.CurrentQuestionBank; 
             set { _parent.CurrentQuestionBank = value; } }
+
+        //In order to populate the ComboBox, there must be a list of all the question banks saved, this reads the database
+        //and saves all the names to the list. 
         private void populateList()
         {
-            //int size = _parent.Database.GetSize("QuestionBanks", "UserID", "");
             List<string> hi = _parent.Database.ReadData("QuestionBanks", "BankName", $"USERID = {_parent.UserID} OR UserID = 0", 1);
             foreach (string s in hi)
             {
-                if (!(_test.Contains(s)))
-                { _test.Add(s); }
+                if (!(_questionBanks.Contains(s)))
+                { _questionBanks.Add(s); }
             }
 
         }
+        //when button is clicked, populateList is called. 
         private void RefreshButtonClicked()
         {
             populateList();
         }
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void HomeButtonClicked()
         { 
             _parent.ChangeToHomePage();
         }
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void PairsGameButtonClicked()
         { 
             _parent.ChangeToPairsGamePage();
         }
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void WordScrambleButtonClicked()
         {
             _parent.ChangeToWordScramblePage();
         }
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void QuizButtonClicked()
         { 
             _parent.ChangeToQuizPage();

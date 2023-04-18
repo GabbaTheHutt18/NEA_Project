@@ -18,7 +18,8 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-
+<!-- All the UserControl defintions represent each page and allow them to be displayed on the main window, it also sets their binding to 
+        the ViewStates and the data context to their respective view models-->
         <UserControl Grid.Column="0" Grid.Row="0">
             <UserControl.Style>
                 <Style TargetType="UserControl">
@@ -331,7 +332,7 @@
                     </Style.Triggers>
                 </Style>
             </UserControl.Style>
-
+            <!-- As well as the usual definitions, the pairs game also includes definitons to the dependency properties-->
             <page:PairsGamePage DataContext="{Binding PairsGameViewModel}" CheckPairCommand ="{Binding CheckPairCommand}" 
                                 TextBlockContains ="{Binding TextBlockContains}" TextBlock2Contains ="{Binding TextBlock2Contains}" 
                                 PairFound="{Binding PairFound}" ParentVM="{Binding ParentVM}"/>

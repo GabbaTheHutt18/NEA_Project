@@ -11,6 +11,7 @@ namespace NEA_Project.ViewModels
 {
     public class SAmericaMapViewModel:ObservableObject
     {
+        //Initialise 
         private MainWindowViewModel _parent;
         public Database SAmerica { get; }
         private string _countryName;
@@ -21,9 +22,12 @@ namespace NEA_Project.ViewModels
         private List<string> _countries = new List<string>();
         public ICommand SearchButtonCommand { get; }
         public ICommand MapButtonCommand { get; }
+
+        //Constructor
         public SAmericaMapViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
+            //will only populate database if its empty
             if (_parent.Database.GetSize("SouthAmerica", "ID", "") == 0)
             {
                 _parent.PopulateCountriesDatabase("SouthAmerica");
@@ -32,6 +36,8 @@ namespace NEA_Project.ViewModels
             SearchButtonCommand = new SimpleCommand(_ => SearchButtonClickedCommand());
             MapButtonCommand = new SimpleCommand(_ => GoToMapPageCommand());
         }
+
+        //assigning public to private, allows them to change if updated whilst the program is running
         public string CountryName { get => _countryName; set { RaiseAndSetIfChanged(ref _countryName, value); } }
         public string CountryPopulation { get => _countryPopulation; set { RaiseAndSetIfChanged(ref _countryPopulation, value); } }
         public string CountryLandArea { get => _countryLandArea; set { RaiseAndSetIfChanged(ref _countryLandArea, value); } }
@@ -39,6 +45,7 @@ namespace NEA_Project.ViewModels
         public string UserInput { get => _userInput; set { RaiseAndSetIfChanged(ref _userInput, value); } }
         public List<string> Countries { get => _countries; }
 
+        //Once a user has selected a Country, the database will be read and retrieves the information
         public void GetCountryInfo()
         {
             List<string> CountryInfo = _parent.Database.ReadData("SouthAmerica", "CountryName, Population, LandArea, Density", $"CountryName LIKE '{UserInput}'", 4);
@@ -48,11 +55,13 @@ namespace NEA_Project.ViewModels
             CountryDensity = CountryInfo[3];
         }
 
-
+        //when the button is clicked GetCountryInfo is called 
         public void SearchButtonClickedCommand()
         {
             GetCountryInfo();
         }
+        //In order to populate the ComboBox, there must be a list of all the possible countries saved, this reads the database
+        //and saves all the names to the list. 
         private void PopulateList()
         {
 
@@ -63,6 +72,8 @@ namespace NEA_Project.ViewModels
             }
 
         }
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
+
         private void GoToMapPageCommand()
         {
             _parent.ChangeToContinentsMap();

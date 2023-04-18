@@ -7,8 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <!--Databinding to the view model: ComboBox, that the user can type into and search for countries, as well as textblocks that display
+        the information of the selected country, a button that triggers a search and a button that returns to home, as well as an image
+        with a relative path -->
         <StackPanel>
-            <Image Source="C:\Users\gabye\Documents\NEA\Images\AsiaMap.png" Height="325" Width="720"/>
+            <Image Source="../Images/AsiaMap.png" Height="325" Width="720"/>
             <StackPanel Orientation="Horizontal">
                 <ComboBox 
                   IsEditable="true"

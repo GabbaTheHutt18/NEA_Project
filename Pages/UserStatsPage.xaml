@@ -7,7 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="White">
-        
+        <!--Data binding with viewmodel: Textblocks that display the users different stats, a button that triggers the display and 
+        a ComboBox that shows the 3 different categories of highscores and button that triggers percentile calculation and displays
+        result  and home button-->
         <StackPanel>
             <TextBlock Text="USER STATS PAGE" />
             <StackPanel Orientation="Horizontal">

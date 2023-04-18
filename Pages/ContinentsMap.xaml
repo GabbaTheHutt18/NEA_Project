@@ -7,8 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <!-- Databinding: Buttons that allow you to navigate to the different continent pages and a home button, as well as an image 
+        with a relative path-->
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\gabye\Documents\NEA\Images\Map_Continents.png"/>
+            <ImageBrush ImageSource="../Images/Map_Continents.png"/>
         </Grid.Background>
         
          <Button Content="Back To Home" Margin="350,5,315,343" Command="{Binding HomePageButtonCommandClicked}" Width="85" Height="40" />

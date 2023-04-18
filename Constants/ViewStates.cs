@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace NEA_Project.Constants
 {
+    //Assigning an integer to a variable which has the same name as each user control. 
     public enum ViewStates
     {
-        //Assigning an integer to each user control to successfully display them. 
+        
         StartPage = 0,
         LoginPage = 1,
         SignUpPage = 2,

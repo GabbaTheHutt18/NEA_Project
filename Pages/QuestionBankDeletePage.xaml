@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <!--Databinding with view model: A ComboBox with a list of all question banks and buttons, 1) deletes, 2) refreshes & repopulates 
+        list in combobox 3) back to menu-->
         <StackPanel>
             <TextBlock Text="HI THIS IS DELETE QUESTION BANK PAGE :D"/>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,20">

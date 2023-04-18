@@ -12,12 +12,13 @@ namespace NEA_Project.ViewModels
 {
     public class SignUpPageViewModel : ObservableObject
     {
+        //Initialise
         private string _userNameInput = "Enter Your Username Here...";
         private string _passwordInput = "Enter Your Password Here...";
         private MainWindowViewModel _parent;
-      
-
         public ICommand VerifyButtonClickedCommand { get; }
+
+        //Constructor
         public SignUpPageViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
@@ -42,11 +43,14 @@ namespace NEA_Project.ViewModels
             }
         }
 
+        //validates the users inputs to ensure they are valid and then adds them to the database accordingly
         private void VerifyButtonClicked()
         {
+            //Makes sure the username is not null and the password is at least 5 characters long
             if (_userNameInput != null && _passwordInput.Length > 4) {
                 if (CheckDatabase())
                 {
+                    //username already exists: gives the user the option to go to the login page or to try again
                     MessageBoxResult result = MessageBox.Show("Hi friend, seems this username already exists, would you like to login?", "My App", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                     if (result == MessageBoxResult.Yes)
                     {
@@ -67,6 +71,7 @@ namespace NEA_Project.ViewModels
            
         }
 
+        //check database ensure that the username is not already taken 
         private bool CheckDatabase()
         {
             try
@@ -89,6 +94,8 @@ namespace NEA_Project.ViewModels
 
         }
 
+        //Adds the user to the database, hashing their password, assigning them an unique ID and adding a record in highscore
+        //database to save their scores. 
         private void AddToDatabase()
         {
             int DataBaseSize = 0;

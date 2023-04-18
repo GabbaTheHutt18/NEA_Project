@@ -12,6 +12,7 @@ namespace NEA_Project.ViewModels
 {
     public class QuestionBankEditViewModel : ObservableObject
     {
+        //Initialise
         MainWindowViewModel _parent;
         private ObservableCollection<string> _questionBank = new ObservableCollection<string>();
         private ObservableCollection<string> _questions = new ObservableCollection<string>();
@@ -27,6 +28,7 @@ namespace NEA_Project.ViewModels
         public ICommand SelectQuestionCommand { get; }
         public ICommand MenuButtonClickedCommand { get; }
         public ICommand RefreshButtonClickedCommand { get; }
+        //Constructor
         public QuestionBankEditViewModel(MainWindowViewModel Parent) 
         {
             _parent = Parent;
@@ -49,7 +51,8 @@ namespace NEA_Project.ViewModels
         public string UpdatedQuestion { get => _updatedQuestion; set { _updatedQuestion = value; } }
         public string UpdatedAnswer { get => _updatedAnswer; set { _updatedAnswer = value; } }
 
-
+        //In order to populate the ComboBox, there must be a list of all the possible countries saved, this reads the database
+        //and saves all the names to the list. 
         private void populateList()
         {
             List<string> hi = _parent.Database.ReadData("QuestionBanks", "BankName", $"USERID = {_parent.UserID}", 1);
@@ -61,17 +64,20 @@ namespace NEA_Project.ViewModels
 
 
         }
-
+        //when button is pressed it calls the method populateList
         private void RefreshButtonClicked()
         {
             populateList();
         }
 
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void MenuButtonClicked()
         {
             _parent.ChangeToQuestionBankMenuPage();
         }
 
+        //this method selects a question bank based on the user input, then reads the questions from the
+        //selected bank and adds them to a list of questions to populate the question combobox. 
         public void SelectQuestionBank()
         {
             _questions.Clear();
@@ -90,6 +96,7 @@ namespace NEA_Project.ViewModels
 
         }
 
+        //reads the database and adds them to a list of answers to populate the answer combobox
         public void SelectQuestion()
         {
             List<string> answer = _parent.Database.ReadData("QuestionBanks", "Answer", $"UserID = {_parent.UserID} AND BankName = '{SelectedQuestionBankName}' AND Question = '{SelectedQuestion}' ", 1);
@@ -100,7 +107,9 @@ namespace NEA_Project.ViewModels
             }
         }
 
-
+        //Updates a question in the question bank database. Checks whether all
+        //required fields are filled in, retrieves the ID of the selected question
+        //, and calls then updates the question in the database.
         public void UpdateQuestion()
         {
             if (SelectedQuestionBankName == String.Empty)
@@ -127,6 +136,9 @@ namespace NEA_Project.ViewModels
             UpdatedQuestion = String.Empty;
 
         }
+        //Updates an answer in the question bank database. Checks whether all
+        //required fields are filled in, retrieves the ID of the selected question
+        //, and calls then updates the answer in the database.
         public void UpdateAnswer()
         {
             if (SelectedQuestionBankName == String.Empty)
@@ -144,7 +156,7 @@ namespace NEA_Project.ViewModels
             }
             else
             {
-                // MISSING THE QUESTION ID CONDITION. 
+                
                 string ID = _parent.Database.ReadData("QuestionBanks", "QuestionID", $"Question = '{SelectedQuestion}' AND UserID = {_parent.UserID} AND BankName = '{SelectedQuestionBankName}'", 1)[0];
                 int QuestionID = Int32.Parse(ID);
                 _parent.Database.UpdateData("QuestionBanks", $"Answer = '{UpdatedAnswer}'", $"UserID = {_parent.UserID} AND BankName = '{SelectedQuestionBankName}' AND QuestionID = {QuestionID}");

@@ -8,6 +8,8 @@
       d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
+        <!--Databinding with viewmodel, Textblocks displays the question and the score, a textbox allow the user to input their answer
+        and 3 buttons: 1 that generate a question, 1 that checks answer and one that goes back to game menu-->
         <StackPanel>
             <TextBlock Text="HI THIS IS SIGN UP :D"/>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,20">

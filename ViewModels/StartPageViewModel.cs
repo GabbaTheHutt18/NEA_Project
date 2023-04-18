@@ -10,36 +10,28 @@ namespace NEA_Project.ViewModels
 {
     public class StartPageViewModel : ObservableObject
     {
+        //Initialise
         private MainWindowViewModel _parent;
-        private string _debugText = "debug";
-
+       
         public ICommand LoginButtonClickedCommand { get; }
         public ICommand SignUpButtonClickedCommand { get; }
 
+        //Constructor
         public StartPageViewModel(MainWindowViewModel parent)
         {
             _parent = parent;
             LoginButtonClickedCommand = new SimpleCommand(_ => LoginButtonClicked());
             SignUpButtonClickedCommand = new SimpleCommand(_ => SignUpButtonClicked());
-            DebugText = _parent.CurrentPage.ToString();
+            
         }
-
-        public string DebugText
-        {
-            get => _debugText;
-            set 
-            {
-                RaiseAndSetIfChanged(ref _debugText, value);
-            }
-        }
-
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void LoginButtonClicked()
         {
 
             _parent.ChangeToLoginPage();
            
         }
-
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void SignUpButtonClicked()
         {
             _parent.ChangeToSignUpPage();

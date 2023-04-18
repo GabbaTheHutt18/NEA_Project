@@ -11,6 +11,7 @@ namespace NEA_Project.ViewModels
 {
     public class QuestionBankCreateViewModel
     {
+        //initialise
         MainWindowViewModel _parent;
         private string _BankName = "Default";
         private string _question = String.Empty;
@@ -18,7 +19,8 @@ namespace NEA_Project.ViewModels
 
         public ICommand MenuButtonClickedCommand { get; }
         public ICommand AddToQuestionBankCommand { get; }
-       
+        
+        //constructor
         public QuestionBankCreateViewModel(MainWindowViewModel Parent) 
         {
             _parent = Parent;
@@ -30,6 +32,8 @@ namespace NEA_Project.ViewModels
         public string Question { get => _question; set { _question = value; } }
         public string Answer { get => _answer; set { _answer = value; } }
 
+        //adds questions and answers to the question bank database, as long as all conditions are met (answer and question can't be null
+        //and bank name can't be null or "Default"). Then a unique QuestionID is calculated before the question and answer are added.
         public void AddQuestionsAndAnswers()
         {
             int QuestionID = 0;
@@ -39,7 +43,7 @@ namespace NEA_Project.ViewModels
 
             }
             else
-            { //Needs to be in an else NOT nested :D
+            { 
                 if (Answer == String.Empty || Question == String.Empty)
                 {
                     MessageBox.Show("Oh no! Please enter both your Question and answer!");
@@ -69,11 +73,12 @@ namespace NEA_Project.ViewModels
             }
         }
 
+        //calculates the number of questions in a given question bank (to help calculate the Question ID)
         public int NumberOfQuestions()
         {
             return _parent.Database.GetSize("QuestionBanks", "QuestionID", $"WHERE UserID = {_parent.UserID} AND BankName = '{BankName}'");
         }
-
+        //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void MenuButtonClicked()
         {
             _parent.ChangeToQuestionBankMenuPage();

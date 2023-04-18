@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <!--Databinding with viewmodel: 3 textboxes that allow the user to input info, Buttons to add to database and a back button-->
         <StackPanel>
             <TextBlock Text="HI THIS IS CREATE QUESTION BANK PAGE :D"/>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,20">

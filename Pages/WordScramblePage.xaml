@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <!--Data binding with view model: Textblock linked to a scrambled country, text box that allows user to input their answer,
+        and 5 buttons: 1) generates question 2 & 3) give hints, 4) Checks answer, 5) go back the game menu-->
         <StackPanel>
             <TextBlock Text="Scrambled Country :D"/>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,20">

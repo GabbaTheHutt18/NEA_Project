@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <!--Data binding with View Model: Comboboxes with all the question banks, all questions of selected question bank and all answers
+        of selected question and 2 textboxes that allow the users to input and 4 buttons, 1) update question, 2) update answer, 3) back 
+        to home page 4) refresh button: repopulate list in comboboxes-->
         <StackPanel>
             <TextBlock Text="HI THIS IS EDIT QUESTION BANK PAGE :D"/>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,20">

@@ -11,6 +11,7 @@ namespace NEA_Project.ViewModels
 {
     public class PairsGameViewModel : ObservableObject
     {
+        //initialise
         MainWindowViewModel _parent;
         private string _howManyPairs;
         public ICommand CheckPairCommand { get; }
@@ -23,8 +24,10 @@ namespace NEA_Project.ViewModels
         int randomNum { get; set; }
 
         private bool _change = false;
+        //constructor
         public PairsGameViewModel(MainWindowViewModel Parent) 
         {
+            //as the codebehind is tightly coupled, this prevents _parent being overwritten
             if (_parent == null)
             {
                 _parent = Parent;
@@ -35,6 +38,7 @@ namespace NEA_Project.ViewModels
             FinishButtonCommand = new SimpleCommand(_ => FinishButtonClicked());
         }
 
+        //All these public properties are part of the dependency properties of the code behind
         public MainWindowViewModel ParentVM { get { return _parent; }
             set
             {
@@ -127,6 +131,10 @@ namespace NEA_Project.ViewModels
             set { RaiseAndSetIfChanged(ref _score, value); ; }
         }
 
+        //when generate question button is clicked, the method first distinguishes which question bank they are using, if its the default 
+        // the ID needs to change because of the way it is saved in the database
+        //then a random question is read from the database.
+
         public string GetQuestion()
         {
             int ID;
@@ -143,6 +151,8 @@ namespace NEA_Project.ViewModels
             return _parent.Database.ReadData("QuestionBanks", "Question", $"QuestionID = {randomNum} AND BankName = '{_parent.CurrentQuestionBank}' AND UserID = {ID}",1)[0];
         }
 
+        //Returns the answer for the current question first assigns ID depending on whether 
+        // the current question bank is the "Default" bank or not. Then, it queries the database to retrieve the answer
         public string GetAnswer()
         {
             int ID;
@@ -158,6 +168,10 @@ namespace NEA_Project.ViewModels
             return _parent.Database.ReadData("QuestionBanks", "Answer", $"Question LIKE '{_question}' AND QuestionID = {randomNum} AND BankName = '{_parent.CurrentQuestionBank}' AND UserID = {ID}",1)[0];
         }
 
+
+        //When the finish button is clicked, the highscore database is read and the existing score is saved
+        //this is then compared to the new score, if the new score is greater, it replaces the old score and
+        // the page is changed to the Game Menu. 
         private void FinishButtonClicked()
         {
             int existingScore = 0;

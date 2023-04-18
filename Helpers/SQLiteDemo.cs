@@ -5,13 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Based on: https://www.codeguru.com/dotnet/using-sqlite-in-a-c-application/
 namespace SQLDatabase
 {
-    //Based on: https://www.codeguru.com/dotnet/using-sqlite-in-a-c-application/
+    
     public class Database
     {
+        //Intitialise
         private SQLiteConnection Connection { get; set; }
-
+        //Constructor
         public Database()
         {
             Connection = CreateConnection();;
@@ -23,7 +25,8 @@ namespace SQLDatabase
 
             SQLiteConnection sqlite_conn;
             // Creates the connection:
-            sqlite_conn = new SQLiteConnection("Data Source=database.db; Version = 3; New = True; Compress = True; ");
+            sqlite_conn = new SQLiteConnection("Data Source=database.db; " +
+                "Version = 3; New = True; Compress = True; ");
             // Open the connection:
             try
             {
@@ -47,11 +50,12 @@ namespace SQLDatabase
 
         }
 
+        //The methods that don't return anything all have the same format:
+        //Create SQL Statement by concatenating 
+        //Call Execute Method
         public void CreateTable(string tablename, string tableRequirements)
-        {
-            //Creates the SQL Statements
-            string Createsql = $"CREATE TABLE IF NOT EXISTS {tablename}({tableRequirements});";
-            //Calls the Execute Method 
+        {   
+            string Createsql = $"CREATE TABLE IF NOT EXISTS {tablename}({tableRequirements});"; 
             Execute(Createsql);
         }
 
@@ -66,6 +70,17 @@ namespace SQLDatabase
             string Updatesql = $"UPDATE {tablename} SET {set} WHERE {condition};";
             Execute(Updatesql);
 
+        }
+        public void DeleteData(string tablename, string condition)
+        {
+            string Deletesql = $"DELETE FROM {tablename} WHERE {condition};";
+            Execute(Deletesql);
+        }
+
+        public void Droptable(string tablename)
+        {
+            string Dropsql = $"DROP TABLE {tablename};";
+            Execute(Dropsql);
         }
 
         public List<string> ReadData(string tablename, string Column, string condition, int NoColums)
@@ -104,18 +119,7 @@ namespace SQLDatabase
             return myreader;
         }
 
-        public void DeleteData(string tablename, string condition)
-        {
-            string Deletesql = $"DELETE FROM {tablename} WHERE {condition};";
-            Execute(Deletesql);
-        }
-
-        public void Droptable(string tablename)
-        {
-            string Dropsql = $"DROP TABLE {tablename};";
-            Execute(Dropsql);
-        }
-
+        
         public int GetSize(string tablename, string ID, string Condition)
         {
             //This gets the size of a database and returns the value

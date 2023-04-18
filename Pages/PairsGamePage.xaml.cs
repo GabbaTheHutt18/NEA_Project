@@ -48,11 +48,8 @@ namespace NEA_Project.Pages
         public PairsGamePage()
         {
             InitializeComponent();
-            //_parent = Parent;
-            //var vm = new PairsGameViewModel(Parent);
-            //this.DataContext = vm;
-            //CreateTextBlocks();
         }
+
         public static readonly DependencyProperty TextBlockContainsProperty =
             DependencyProperty.Register("TextBlockContains", typeof(string), typeof(PairsGamePage),
                 new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
@@ -84,11 +81,13 @@ namespace NEA_Project.Pages
             set { SetValue(PairFoundProperty, value); }
         }
 
+
         private void CreateTextBlocks()
         {
 
-
+            
             Random random = new Random();
+            //Databinding for the text blocks
             PairsGameViewModel myDataObject = new PairsGameViewModel(ParentVM);
             Binding Question = new Binding("Question");
             Question.Source = myDataObject;
@@ -98,21 +97,24 @@ namespace NEA_Project.Pages
             bool validNumber = false;
             if (NumOfPairs.Text != null)
             {
+                //only happens if the user inputs in the text box
                 try
                 {
                     Pairs = Int32.Parse(NumOfPairs.Text);
                     validNumber = true;
+                    //must be an int
                 }
                 catch (Exception)
                 {
 
-                    MessageBox.Show("NO");
+                    MessageBox.Show("Not the right data type!");
                 }
             }
 
 
             if (Pairs != 0 && validNumber)
             {
+                //if the user input more that 0 and it is a valid number
                 for (int i = 0; i < Pairs; i++)
                 {
                     int height = (int)canvas.Height;
@@ -153,6 +155,7 @@ namespace NEA_Project.Pages
             {
                 if (textblocks[i].IsMouseOver)
                 {
+                    //checks which element (textblock) is currently being clicked on
                     whichElement = i;
                 }
 
@@ -160,7 +163,7 @@ namespace NEA_Project.Pages
         }
 
 
-
+        //event handler, changes the textblock's position based on the mouse's position
         private void canvas_DragOver(object sender, DragEventArgs e)
         {
             Point dropPosition = e.GetPosition(canvas);
@@ -170,7 +173,7 @@ namespace NEA_Project.Pages
         }
 
 
-
+        //event handler, when the left mouse button is pressed, it starts the drag and drop proccess
         private void MouseMove(object sender, MouseEventArgs e)
         {
             GetElement();
@@ -181,17 +184,21 @@ namespace NEA_Project.Pages
             }
         }
 
+        //triggered when an item is dropped on the canvas, creates a hit box for the dragged item and then iterates through all the other 
+        //textblocks, seeing if their hit box intersects with the dragged textblock, if they do the CheckPairCommand is called and if its 
+        // a pair, then the textblocks are removed and the canvas is updated. if the canvas count is 1 then the user is displayed a message
+        // to let them know all pairs have been found
         private void canvas_Drop(object sender, DragEventArgs e)
         {
-            Rect Circlehitbox = new Rect(Canvas.GetLeft(textblocks[whichElement]), Canvas.GetTop(textblocks[whichElement]), textblocks[whichElement].Width, textblocks[whichElement].Height);
+            Rect DraggedHitBox = new Rect(Canvas.GetLeft(textblocks[whichElement]), Canvas.GetTop(textblocks[whichElement]), textblocks[whichElement].Width, textblocks[whichElement].Height);
 
             for (int i = 0; i < textblocks.Count; i++)
             {
                 if (textblocks[whichElement] != textblocks[i])
                 {
 
-                    Rect Rectanglehitbox = new Rect(Canvas.GetLeft(textblocks[i]), Canvas.GetTop(textblocks[i]), textblocks[i].Width, textblocks[i].Height);
-                    if (Circlehitbox.IntersectsWith(Rectanglehitbox))
+                    Rect PairedHitBox = new Rect(Canvas.GetLeft(textblocks[i]), Canvas.GetTop(textblocks[i]), textblocks[i].Width, textblocks[i].Height);
+                    if (DraggedHitBox.IntersectsWith(PairedHitBox))
                     {
                         TextBlockContains = textblocks[i].Text;
                         TextBlock2Contains = textblocks[whichElement].Text;
@@ -208,7 +215,7 @@ namespace NEA_Project.Pages
                         }
                         if (canvas.Children.Count == 1)
                         {
-                            MessageBox.Show("Hello");
+                            MessageBox.Show("Finished :)");
                         }
 
                     }
@@ -218,6 +225,7 @@ namespace NEA_Project.Pages
 
         }
 
+        //when the button is pressed, all the text boxes are removed and then new textblocks are created
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             for (int i = textblocks.Count - 1; i >= 0; i--)
