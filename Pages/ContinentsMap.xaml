@@ -9,9 +9,9 @@
     <Grid>
         <!-- Databinding: Buttons that allow you to navigate to the different continent pages and a home button, as well as an image 
         with a relative path-->
-        <Grid.Background>
-            <ImageBrush ImageSource="../Images/Map_Continents.png"/>
-        </Grid.Background>
+        <!-- <Grid.Background>
+            <ImageBrush ImageSource="pack://application:,,,/Images/Continent_Map.png"/>
+        </Grid.Background>-->
         
          <Button Content="Back To Home" Margin="350,5,315,343" Command="{Binding HomePageButtonCommandClicked}" Width="85" Height="40" />
         

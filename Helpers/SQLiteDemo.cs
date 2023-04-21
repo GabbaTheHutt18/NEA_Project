@@ -106,8 +106,17 @@ namespace SQLDatabase
                     }
                     catch (Exception)
                     {
-                        int temp = (sqlite_datareader.GetInt32(i));
-                        myreader.Add(temp.ToString());
+                        try
+                        {
+                            int temp = (sqlite_datareader.GetInt32(i));
+                            myreader.Add(temp.ToString());
+                        }
+                        catch (Exception)
+                        {
+
+                            
+                        }
+                        
                         
                     }
                 }

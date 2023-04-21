@@ -99,7 +99,7 @@ namespace NEA_Project.ViewModels
             }
             
             //compared the users input to the password in the database
-            if (stringHashedPassword == correctPassword)
+            if (stringHashedPassword == correctPassword.Replace(" ",""))
             {
                 return true;
             }

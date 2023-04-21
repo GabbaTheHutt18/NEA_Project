@@ -16,17 +16,10 @@ namespace NEA_Project.ViewModels
         //Initialise
         MainWindowViewModel _parent;
         private double _userPercentile;
-        Dictionary<int, List<int>> HighScores = new Dictionary<int, List<int>>();
-        List<int> HighScore1 = new List<int>();
-        List<int> HighScore2 = new List<int>();
-        List<int> HighScore3 = new List<int>();
-        List<Dictionary<int, int>> SortedHighScores1 = new List<Dictionary<int, int>>();
-        List<Dictionary<int, int>> SortedHighScores2 = new List<Dictionary<int, int>>();
-        List<Dictionary<int, int>> SortedHighScores3 = new List<Dictionary<int, int>>();
+        private int _quizScoreAverage = 0;
+        private int _pairsScoreAverage = 0;
+        private int _wordScrambleAverage = 0;
         public MergeSort MergeSort;
-        public double HowMuchBetterHS1;
-        public double HowMuchBetterHS2;
-        public double HowMuchBetterHS3;
         private string _quizHighScore;
         private string _pairsHighScore;
         private string _wordScrambleHighScore;
@@ -36,6 +29,7 @@ namespace NEA_Project.ViewModels
         public ICommand GetUserStatsCommand { get; }
         public ICommand GetPercentagesCommand { get; }
         public ICommand HomeButtonClickedCommand { get; }
+        public ICommand GetAverageCommand { get;  }
         //Constructor
         public UserStatsViewModel(MainWindowViewModel Parent) 
         {
@@ -43,7 +37,8 @@ namespace NEA_Project.ViewModels
             MergeSort = new MergeSort();
             HomeButtonClickedCommand = new SimpleCommand(_ => HomeButtonClicked());
             GetUserStatsCommand = new SimpleCommand(_=> GetUserStats());
-            GetPercentagesCommand = new SimpleCommand(_ => GetPercentage());
+            GetPercentagesCommand = new SimpleCommand(_ => GetPercentile());
+            GetAverageCommand = new SimpleCommand(_ => GetAverageScore());
         }
         //when the button is pressed, the method in MainWindowViewModel is called to change the page. 
         private void HomeButtonClicked()
@@ -53,6 +48,10 @@ namespace NEA_Project.ViewModels
         public string QuizHighScore { get => _quizHighScore; set { RaiseAndSetIfChanged(ref _quizHighScore, value); } }
         public string PairsHighScore { get => _pairsHighScore; set { RaiseAndSetIfChanged(ref _pairsHighScore, value); } }
         public string WordHighScore { get => _wordScrambleHighScore; set { RaiseAndSetIfChanged(ref _wordScrambleHighScore, value); } }
+        public int QuizScoreAverage { get => _quizScoreAverage; set { RaiseAndSetIfChanged(ref _quizScoreAverage, value); } }
+        public int PairsScoreAverage { get => _pairsScoreAverage; set { RaiseAndSetIfChanged(ref _pairsScoreAverage, value); } }
+        public int WordScrambleScoreAverage { get => _wordScrambleAverage; set { RaiseAndSetIfChanged(ref _wordScrambleAverage, value); } }
+
         public List<string> HighScoresCategories { get => _highScoreCategories; }
 
         public string selectedValue
@@ -64,145 +63,193 @@ namespace NEA_Project.ViewModels
         public void GetUserStats()
         {
             //Reads database and assigns values
-            QuizHighScore = _parent.Database.ReadData("UserStats","HighScore1",
-                $"UserID = {_parent.UserID}",1)[0];
-            PairsHighScore = _parent.Database.ReadData("UserStats", "HighScore2", 
-                $"UserID = {_parent.UserID}", 1)[0];
-            WordHighScore = _parent.Database.ReadData("UserStats", "HighScore3", 
-                $"UserID = {_parent.UserID}", 1)[0];
+            List<string> QuizScores = _parent.Database.ReadData("QuizScores", "MAX(Score)", "USERID = 1", 1);
+            List<string> PairsScores = _parent.Database.ReadData("PairsScores", "MAX(Score)", "USERID = 1", 1);
+            List<string> WordScrambleScores = _parent.Database.ReadData("WordScrambleScores", "MAX(Score)", "USERID = 1", 1);
+            if (QuizScores.Count != 0)
+            {
+                QuizHighScore = QuizScores[0];
+            }
+            else
+            {
+                QuizHighScore = "0";
+            }
+            if (PairsScores.Count != 0)
+            {
+                PairsHighScore = PairsScores[0];
+            }
+            else
+            {
+                PairsHighScore = "0";
+            }
+            if (WordScrambleScores.Count != 0)
+            {
+                WordHighScore = WordScrambleScores[0];
+            }
+            else
+            {
+                WordHighScore = "0";
+            }
+            
+            
+            
         }
         
-        public void GetPercentage()
-        {
-            PopulateUnsortedLists();
-            //Depending on what the user picks, the program will
-            //calculate the percentile of the different games 
-            // and display this to the user
-            if (_selectedHighScore == "Quiz HighScore")
-            {
-                SortedHighScores1 = PopulateSortedLists(HighScore1, 0);
-                HowMuchBetterHS1 = CalculatePercentile(SortedHighScores1,
-                    _parent.UserID);
-                MessageBox.Show($"User is {HowMuchBetterHS1}% " +
-                    $"better than other users at Quiz");
-            }
-            else if (_selectedHighScore == "Pairs HighScore")
-            {
-                SortedHighScores2 = PopulateSortedLists(HighScore2,1);
-                HowMuchBetterHS2 = CalculatePercentile(SortedHighScores2, 
-                    _parent.UserID);
-                MessageBox.Show($"User is {HowMuchBetterHS2}% " +
-                    $"better than other users at Pairs");
-            }
-            else if (_selectedHighScore == "Word Scramble HighScore")
-            {
-                SortedHighScores3 = PopulateSortedLists(HighScore3, 2);
-                HowMuchBetterHS3 = CalculatePercentile(SortedHighScores3,
-                    _parent.UserID);
-                MessageBox.Show($"User is {HowMuchBetterHS3}% " +
-                    $"better than other users at Word Scramble");
-            }
-            
-            
-        }
+        
 
         //populates a list of high scores for each user in a database table 
-        public void PopulateUnsortedLists()
+        
+        private void GetAverageScore()
         {
-            //ensures HighScores is empty
-            HighScores.Clear();
-            //goes through every user and saves their highscores to a dictionary which saves which scores belong to which user
-            //Then it adds all the highscore1, highscore2 and highscore3s to a list
-            for (int i = 0; i < _parent.Database.GetSize("UserStats", "UserID", ""); i++)
+            int NumberOfQuizScores = _parent.Database.GetSize("QuizScores", "QuizID", "WHERE UserID = 1");
+            int NumberOfPairsScores = _parent.Database.GetSize("PairsScores", "PairsID", "WHERE UserID = 1");
+            int NumberOfWordScrambleScores = _parent.Database.GetSize("WordScrambleScores", "WordScrambleID", "WHERE UserID = 1");
+
+            List<string> QuizScores = _parent.Database.ReadData("QuizScores", "Score", "USERID = 1", 1);
+            List<string> PairsScores = _parent.Database.ReadData("PairsScores", "Score", "USERID = 1", 1);
+            List<string> WordScrambleScores = _parent.Database.ReadData("WordScrambleScores", "Score", "USERID = 1", 1);
+
+            int TotalQuizScore = 0;
+            int TotalPairsScore = 0;
+            int TotalWordScrambleScore = 0;
+
+
+            foreach (var item in QuizScores)
             {
-                
-                List<int> hs = PopulateDictionary();
-                HighScores[i + 1] = hs;
-                Console.WriteLine(i);
-                HighScore1.Add(HighScores[i + 1][0]);
-                HighScore2.Add(HighScores[i + 1][1]);
-                HighScore3.Add(HighScores[i + 1][2]); 
-                
-                
-                 
+                TotalQuizScore += Int32.Parse(item);
+            }
+
+            foreach (var item in PairsScores)
+            {
+                TotalPairsScore += Int32.Parse(item);
+            }
+
+            foreach (var item in WordScrambleScores)
+            {
+                TotalWordScrambleScore += Int32.Parse(item);
+            }
+
+            try
+            {
+                QuizScoreAverage = TotalQuizScore / NumberOfQuizScores;
+            }
+            catch (Exception)
+            {
 
             }
+            
+            try
+            {
+                PairsScoreAverage = TotalPairsScore / NumberOfPairsScores;
+            }
+            catch (Exception)
+            {
+
+            }
+            
+            try
+            {
+                WordScrambleScoreAverage = TotalWordScrambleScore / NumberOfWordScrambleScores;
+            }
+            catch (Exception)
+            {
+
+            }
+            
+
 
         }
 
-        public List<Dictionary<int, int>> PopulateSortedLists(List<int> HighScore, int i)
+        void GetPercentile()
         {
-            //sorts through the list
-            MergeSort.Sort(HighScore);
-            List<Dictionary<int, int>> SortedHighScores = 
-                new List<Dictionary<int, int>>();
-            
-            //goes through the now sorted highscores and compares this to the
-            //dictionary of highscores in order to assign
-            //the right highscores to the right UserIDs
-            foreach (var item in HighScore)
+            int NumberOfScores = 0;
+            List<int> HighScores = new List<int>();
+            int UserHS = 0;
+
+            switch (_selectedHighScore)
             {
-
-                foreach (var ID in HighScores)
-                {
-                    //Compares the value of the original highscore dictionary to a
-                    //highscore to find out which user highscore it belongs to
-                    if (ID.Value[i] == item)
+                case "Quiz HighScore":
+                    NumberOfScores = _parent.Database.GetSize("QuizScores", "DISTINCT UserID", "");
+                    for (int i = 1; i < NumberOfScores + 1; i++)
                     {
-                        
-                        try
-                        {
-                            
-                            Dictionary<int, int> temp = new Dictionary<int, int>() { { ID.Key, item } };
-                            SortedHighScores.Add(temp);
 
-                        }
-                        catch (Exception)
+                        List<string> HighScore = _parent.Database.ReadData("QuizScores", "MAX(Score)", $"USERID = {i}", 1);
+                        HighScores.Add(Int32.Parse(HighScore[0]));
+                        if (i == _parent.UserID)
                         {
-
+                            UserHS = Int32.Parse(HighScore[0]);
                         }
 
                     }
-                }
+                    break;
+                case "Pairs HighScore":
+                    NumberOfScores = _parent.Database.GetSize("PairsScores", "DISTINCT UserID", "");
+                    for (int i = 1; i < NumberOfScores + 1; i++)
+                    {
 
+                        List<string> HighScore = _parent.Database.ReadData("PairsScores", "MAX(Score)", $"USERID = {i}", 1);
+                        HighScores.Add(Int32.Parse(HighScore[0]));
+                        if (i == _parent.UserID)
+                        {
+                            UserHS = Int32.Parse(HighScore[0]);
+                        }
+
+                    }
+                    break;
+                case "Word Scramble HighScore":
+                    NumberOfScores = _parent.Database.GetSize("WordScrambleScores", "DISTINCT UserID", "");
+                    for (int i = 1; i < NumberOfScores + 1; i++)
+                    {
+
+                        List<string> HighScore = _parent.Database.ReadData("WordScrambleScores", "MAX(Score)", $"USERID = {i}", 1);
+                        HighScores.Add(Int32.Parse(HighScore[0]));
+                        if (i == _parent.UserID)
+                        {
+                            UserHS = Int32.Parse(HighScore[0]);
+                        }
+
+                    }
+                    break;
+                default:
+                    break;
             }
-            return SortedHighScores;
-        }
 
-        public List<int> PopulateDictionary()
-        {
-            List<string> temp = _parent.Database.ReadData("UserStats", "HighScore1, HighScore2, HighScore3", $"UserID = {_parent.UserID}",3);
-            List<int> HighScores = new List<int>();
-            for (int i = 0; i < temp.Count; i++)
-            {
-                HighScores.Add(Int32.Parse(temp[i]));
-                
-            }
+            List<int> SortedHighScores = MergeSort.Sort(HighScores);
 
-
-            return HighScores;
-        }
-
-        //calculates the percentile rank of user's high score compared to
-        //the high scores for all users, by finding the user's position
-        // and dividing it by the number of users.
-        public double CalculatePercentile(List<Dictionary<int, int>> HighScores, int UserID)
-        {
-            _userPercentile = 0;
             int position = -1;
-            for (int i = 0; i < HighScores.Count; i++)
+            for (int i = 0; i < SortedHighScores.Count; i++)
             {
-                if (HighScores[i].ContainsKey(UserID))
+                if (SortedHighScores[i] == UserHS)
                 {
                     position = i;
                     break;
                 }
             }
-            double temp = (double)position / HighScores.Count; 
-            double Percentile = temp * 100;
-
-            _userPercentile = 100 - Percentile;
-            return _userPercentile;
+            if (position == 0)
+            {
+                _userPercentile = 0;
+            }
+            else if (position == -1)
+            {
+                MessageBox.Show("Oh no! :o Make sure you've selected a category!");
+            }
+            else
+            {
+                double temp = (double)position / (double)SortedHighScores.Count;
+                double Percentile = temp * 100;
+                _userPercentile = Percentile;
+            }
+            if (position != -1) 
+            {
+                MessageBox.Show($"You are better than {_userPercentile}% of users :)");
+            }
+            
+            
         }
+
+
     }
 }
+
+
+

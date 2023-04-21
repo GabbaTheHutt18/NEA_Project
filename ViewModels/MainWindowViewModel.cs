@@ -64,7 +64,9 @@ namespace NEA_Project.ViewModels
         {
             Database.CreateTable("LoginDetails", "UserID INT, UserNames VARCHAR(20), Passwords VARCHAR(500)");
             Database.CreateTable("QuestionBanks", "UserID INT, BankName VARCHAR(100), QuestionID INT, Question VARCHAR(100), Answer VARCHAR(150)");
-            Database.CreateTable("UserStats", "UserID INT, HighScore1 INT, HighScore2 INT, HighScore3 INT");
+            Database.CreateTable("QuizScores", "QuizID INT, UserID INT, Score VARCHAR(100)");
+            Database.CreateTable("PairsScores", "PairsID INT, UserID INT, Score VARCHAR(100)");
+            Database.CreateTable("WordScrambleScores", "WordScrambleID INT, UserID INT, Score VARCHAR(100)");
             PopulateQuestionBank();
             LoginPageViewModel = new LoginPageViewModel(this);
             StartPageViewModel = new StartPageViewModel(this);

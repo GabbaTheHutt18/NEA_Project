@@ -192,7 +192,7 @@ namespace NEA_Project.Pages
         {
             Rect DraggedHitBox = new Rect(Canvas.GetLeft(textblocks[whichElement]), Canvas.GetTop(textblocks[whichElement]), textblocks[whichElement].Width, textblocks[whichElement].Height);
 
-            for (int i = 0; i < textblocks.Count; i++)
+            for (int i = 0; i < textblocks.Count -1; i++)
             {
                 if (textblocks[whichElement] != textblocks[i])
                 {

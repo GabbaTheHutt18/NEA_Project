@@ -13,16 +13,27 @@
         <StackPanel>
             <TextBlock Text="USER STATS PAGE" />
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="QUIZ " Margin="10,0"></TextBlock>
+                <TextBlock Text="QUIZ HIGH SCORE" Margin="10,0"></TextBlock>
                 <TextBlock Text="{Binding QuizHighScore}" Width="40" Margin="10,0"></TextBlock>
-                <TextBlock Text="PAIRS GAME" Margin="10,0"></TextBlock>
+                <TextBlock Text="PAIRS HIGH SCORE" Margin="10,0"></TextBlock>
                 <TextBlock Text="{Binding PairsHighScore}" Width="40" Margin="10,0"></TextBlock>
-                <TextBlock Text="WORD SCRAMBLE" Margin="10,0"></TextBlock>
+                <TextBlock Text="WORD SCRAMBLE HIGH SCORE" Margin="10,0"></TextBlock>
                 <TextBlock Text="{Binding WordHighScore}" Width="100" Margin="10,0"></TextBlock>
                 <Button Content="Get Stats" Command="{Binding GetUserStatsCommand}" Width="50" Height="30"/>
             
             </StackPanel>
-        
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="AVERAGE QUIZ SCORE" Margin="10,0"></TextBlock>
+                <TextBlock Text="{Binding QuizScoreAverage}" Width="40" Margin="10,0"></TextBlock>
+                <TextBlock Text="AVERAGE PAIRS SCORE" Margin="10,0"></TextBlock>
+                <TextBlock Text="{Binding PairsScoreAverage}" Width="40" Margin="10,0"></TextBlock>
+                <TextBlock Text="AVERAGE WORD SCRAMBLE SCORE" Margin="10,0"></TextBlock>
+                <TextBlock Text="{Binding WordScrambleScoreAverage}" Width="100" Margin="10,0"></TextBlock>
+                <Button Content="Get Average" Command="{Binding GetAverageCommand}" Width="50" Height="30"/>
+
+            </StackPanel>
+
             <StackPanel Orientation="Vertical">
                 <ComboBox 
                     Width ="200" Height="20"

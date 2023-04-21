@@ -113,7 +113,6 @@ namespace NEA_Project.ViewModels
             byte[] hashedPassword = _parent.Hashing(_passwordInput);
             string stringHashedPassword = String.Join(" ", hashedPassword);
             _parent.Database.InsertData("LoginDetails", "UserID, UserNames, Passwords", $"{DataBaseSize},'{_userNameInput}', '{stringHashedPassword}'");
-            _parent.Database.InsertData("UserStats","UserID, HighScore1,HighScore2,HighScore3", $"{DataBaseSize}, 0, 0, 0");
             _parent.ChangeToHomePage();
 
         }

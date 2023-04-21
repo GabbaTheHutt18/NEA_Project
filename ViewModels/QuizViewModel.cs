@@ -66,21 +66,9 @@ namespace NEA_Project.ViewModels
         // the page is changed to the Game Menu. 
         private void FinishButtonClicked()
         {
-            int existingScore = 0;
-            try
-            {
-                string DatabaseScore = _parent.Database.ReadData("UserStats", "HighScore1", $"USERID = {_parent.UserID}",1)[0];
-                existingScore = Int32.Parse(DatabaseScore);
-            }
-            catch (Exception)
-            {
-
-                
-            }
-            if (existingScore < Score)
-            {
-                _parent.Database.UpdateData("UserStats", $"HighScore1 = {Score}", $"USERID = {_parent.UserID}");
-            }
+            int NumberOfScores = _parent.Database.GetSize("QuizScores", "UserID", $"WHERE UserID = {_parent.UserID}");
+            NumberOfScores += 1;
+            _parent.Database.InsertData("QuizScores", "QuizID, UserID, Score", $"{NumberOfScores},{_parent.UserID},'{Score}'");
             Score = 0;
             _parent.ChangeToGameMenuPage();
         }

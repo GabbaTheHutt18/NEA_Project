@@ -14,13 +14,13 @@
             <TextBlock Text="HI THIS IS SIGN UP :D"/>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
                 <TextBlock Text="QUESTION:"/>
-                <TextBlock VerticalAlignment ="Center" Width="200" Text="{Binding UserNameInput, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock VerticalAlignment ="Center" Width="200" Text="{Binding Question, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock VerticalAlignment ="Center" HorizontalAlignment="Right" Width="200" Text="{Binding Score, UpdateSourceTrigger=PropertyChanged}"/>
 
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
                 <TextBlock Text="ANSWER:"/>
-                <TextBox VerticalAlignment ="Center" Width="200" Text="{Binding PasswordInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox VerticalAlignment ="Center" Width="200" Text="{Binding UserInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <Button Content = "Generate Question" Height = "30" Width = "120"
                 Command="{Binding VerifyButtonClickedCommand}"/>
