@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 //Based on: https://www.codeguru.com/dotnet/using-sqlite-in-a-c-application/
 namespace SQLDatabase
 {
-    
+
     public class Database
     {
         //Intitialise
@@ -16,7 +16,7 @@ namespace SQLDatabase
         //Constructor
         public Database()
         {
-            Connection = CreateConnection();;
+            Connection = CreateConnection(); ;
 
         }
 
@@ -54,8 +54,8 @@ namespace SQLDatabase
         //Create SQL Statement by concatenating 
         //Call Execute Method
         public void CreateTable(string tablename, string tableRequirements)
-        {   
-            string Createsql = $"CREATE TABLE IF NOT EXISTS {tablename}({tableRequirements});"; 
+        {
+            string Createsql = $"CREATE TABLE IF NOT EXISTS {tablename}({tableRequirements});";
             Execute(Createsql);
         }
 
@@ -99,36 +99,26 @@ namespace SQLDatabase
                 for (int i = 0; i < NoColums; i++)
                 {
                     //as not all of the fields are strings, the catch handles any of the integer fields
-                    try
+                    if (!sqlite_datareader.IsDBNull(i))
                     {
-                        //adds i (field) to myreader 
-                        myreader.Add(sqlite_datareader.GetString(i));
+                        // Dynamically handle different types
+                        object value = sqlite_datareader.GetValue(i);
+                        myreader.Add(value.ToString());
                     }
-                    catch (Exception)
+                    else
                     {
-                        try
-                        {
-                            int temp = (sqlite_datareader.GetInt32(i));
-                            myreader.Add(temp.ToString());
-                        }
-                        catch (Exception)
-                        {
-
-                            
-                        }
-                        
-                        
+                        myreader.Add("NULL"); // Handle NULL values
                     }
                 }
 
 
 
             }
-            
+
             return myreader;
         }
 
-        
+
         public int GetSize(string tablename, string ID, string Condition)
         {
             //This gets the size of a database and returns the value
@@ -144,3 +134,4 @@ namespace SQLDatabase
         }
     }
 }
+

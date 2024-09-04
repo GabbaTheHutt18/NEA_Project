@@ -27,7 +27,14 @@ namespace NEA_Project.ViewModels
         {
             _parent = parent;
             //will only populate database if its empty
-            if (_parent.Database.GetSize("Europe", "ID", "") == 0)
+            try
+            {
+                if (_parent.Database.GetSize("Europe", "ID", "") == 0)
+                {
+                    _parent.PopulateCountriesDatabase("Europe");
+                }
+            }
+            catch (Exception e)
             {
                 _parent.PopulateCountriesDatabase("Europe");
             }

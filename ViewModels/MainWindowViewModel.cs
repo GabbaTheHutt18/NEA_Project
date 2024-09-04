@@ -5,11 +5,14 @@ using SQLDatabase;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace NEA_Project.ViewModels
@@ -62,12 +65,13 @@ namespace NEA_Project.ViewModels
         //Constructor
         public MainWindowViewModel()
         {
+            PopulateQuestionBank();
             Database.CreateTable("LoginDetails", "UserID INT, UserNames VARCHAR(20), Passwords VARCHAR(500)");
             Database.CreateTable("QuestionBanks", "UserID INT, BankName VARCHAR(100), QuestionID INT, Question VARCHAR(100), Answer VARCHAR(150)");
             Database.CreateTable("QuizScores", "QuizID INT, UserID INT, Score VARCHAR(100)");
             Database.CreateTable("PairsScores", "PairsID INT, UserID INT, Score VARCHAR(100)");
             Database.CreateTable("WordScrambleScores", "WordScrambleID INT, UserID INT, Score VARCHAR(100)");
-            PopulateQuestionBank();
+            
             LoginPageViewModel = new LoginPageViewModel(this);
             StartPageViewModel = new StartPageViewModel(this);
             SignUpPageViewModel = new SignUpPageViewModel(this);
@@ -213,7 +217,8 @@ namespace NEA_Project.ViewModels
         //Gets the which continent, then reads a text file, which then is split into different arrays, before being added to the database
         public void PopulateCountriesDatabase(string Continent)
         {
-            string TopFolder = @"../../../Content";
+            string TopFolder = @" ..\..\Content";
+     
             string filename = Continent + ".txt";
             string fullPath = Path.Combine(TopFolder, filename);
             string[] lines = File.ReadAllLines(fullPath);
